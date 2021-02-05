@@ -28,7 +28,7 @@ class SchedulingServiceProvider extends PackageServiceProvider
                 '2020_05_04_100000_create_slots_table',
                 '2020_05_04_101000_create_blocks_table',
                 '2020_05_04_102000_create_holds_table',
-                '2020_05_04_110000_create_games_table.php'
+                '2020_05_04_110000_create_games_table.php',
             ])
             ->hasCommand(SchedulingCommand::class);
     }
@@ -40,7 +40,7 @@ class SchedulingServiceProvider extends PackageServiceProvider
     public function packageBooted()
     {
         foreach ($this->package->migrationFileNames as $migrationFileName) {
-            if (!$this->migrationFileExists($migrationFileName)) {
+            if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
                     $this->package->basePath("/../database/migrations/{$migrationFileName}.php.stub") => database_path('migrations/' . Str::finish($migrationFileName, '.php')),
                 ], "{$this->package->name}-migrations");
