@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRecurringSchedulesTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('recurring_schedules', function (Blueprint $table) {
+            $userModel = config('tipoff.model_class.user');
+            $userTable = (new $userModel)->getTable();
+
+            $roomModel = config('tipoff.model_class.room');
+            $roomTable = (new $roomModel)->getTable();
+
+            $rateModel = config('tipoff.model_class.rate');
+            $rateTable = (new $rateModel)->getTable();
+
+            $table->id();
+            $table->foreignId('room_id')->index()->references('id')->on($roomTable);
+            $table->foreignId('rate_id')->index()->references('id')->on($rateTable);
+            $table->string('frequency')->nullable(); // ex.: mon,tue,fri or mon-sun
+            $table->string('time_table')->nullable(); // Location's timezone, not UTC. 34 hour military time. ex.: 18:00:00
+            $table->date('valid_from'); // Will default to today's date if not set.
+            $table->date('expires_at')->nullable();
+            $table->foreignId('creator_id')->references('id')->on($userTable);
+            $table->foreignId('updater_id')->references('id')->on($userTable);
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
+}

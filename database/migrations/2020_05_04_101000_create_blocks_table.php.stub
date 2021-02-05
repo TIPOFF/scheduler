@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Tipoff\Scheduling\Models\Slot;
+
+class CreateBlocksTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('blocks', function (Blueprint $table) {
+            $userModel = config('tipoff.model_class.user');
+            $userTable = (new $userModel)->getTable();
+
+            $slotModel = new Slot;
+            $slotTable = (new $slotModel)->getTable();
+
+            $table->id();
+            $table->foreignId('slot_id')->index()->references('id')->on($slotTable);
+            $table->unsignedTinyInteger('participants'); // Number of participants to be blocked in the availability slot
+            $table->string('type')->nullable(); // Blocks are automatically applied for Private Games
+            $table->foreignId('creator_id')->references('id')->on($userTable); // Will be the customer's user ID if it is a private game
+            $table->timestamps();
+        });
+    }
+}
