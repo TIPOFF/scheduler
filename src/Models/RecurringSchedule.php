@@ -3,10 +3,10 @@
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tipoff\Support\Models\BaseModel;
 
-class RecurringSchedule extends Model
+class RecurringSchedule extends BaseModel
 {
     use HasFactory;
 

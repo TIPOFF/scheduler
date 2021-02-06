@@ -2,11 +2,11 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Schediling\Filters\GameFilters;
+use Tipoff\Support\Models\BaseModel;
 
-class Game extends Model
+class Game extends BaseModel
 {
     use HasFactory;
 

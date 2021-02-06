@@ -1,9 +1,9 @@
 <?php namespace Tipoff\Scheduling\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Tipoff\Support\Models\BaseModel;
 
-class ScheduleEraser extends Model
+class ScheduleEraser extends BaseModel
 {
     use HasFactory;
 
