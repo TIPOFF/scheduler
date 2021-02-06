@@ -1,7 +1,7 @@
 # Laravel Package for Escape Room Scheduling
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tipoff/scheduling.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduling)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tipoff/scheduling/run-tests?label=tests)](https://github.com/tipoff/scheduling/actions?query=workflow%3ATests+branch%3Amaster)
+![Tests](https://github.com/tipoff/scheduling/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/tipoff/scheduling.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduling)
 
 
@@ -23,6 +23,7 @@ php artisan migrate
 ```
 
 You can publish the config file with:
+
 ```bash
 php artisan vendor:publish --provider="Tipoff\Scheduling\SchedulingServiceProvider" --tag="scheduling-config"
 ```
