@@ -1,11 +1,11 @@
 <?php namespace Tipoff\Scheduling\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasPackageFactory;
 
 class ScheduleEraser extends BaseModel
 {
-    use HasFactory;
+    use HasPackageFactory;
 
     /**
      * The attributes that are mass assignable.
