@@ -9,17 +9,11 @@ class CreateScheduleErasersTable extends Migration
     public function up()
     {
         Schema::create('schedule_erasers', function (Blueprint $table) {
-            $userModel = config('tipoff.model_class.user');
-            $userTable = (new $userModel)->getTable();
-
-            $roomModel = config('tipoff.model_class.room');
-            $roomTable = (new $roomModel)->getTable();
-
             $table->id();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
-            $table->foreignId('room_id')->references('id')->on($roomTable);
-            $table->foreignId('creator_id')->references('id')->on($userTable);
+            $table->foreignIdFor(app('room'));
+            $table->foreignIdFor(app('user'), 'creator_id');
             $table->timestamps();
         });
     }

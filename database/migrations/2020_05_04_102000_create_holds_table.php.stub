@@ -14,15 +14,9 @@ class CreateHoldsTable extends Migration
     public function up()
     {
         Schema::create('holds', function (Blueprint $table) {
-            $userModel = config('tipoff.model_class.user');
-            $userTable = (new $userModel)->getTable();
-
-            $slotModel = config('tipoff.model_class.slot');
-            $slotTable = (new $slotModel)->getTable();
-
             $table->id();
-            $table->foreignId('slot_id')->references('id')->on($slotTable);
-            $table->foreignId('creator_id')->nullable()->references('id')->on($userTable); // Null if made through book online. Otherwise, the staff member that is processing the booking.
+            $table->foreignIdFor(app('slot'));
+            $table->foreignIdFor(app('user'), 'creator_id')->nullable(); // Null if made through book online. Otherwise, the staff member that is processing the booking.
             $table->softDeletes();
             $table->timestamps(); // Don't need an expiration time, just use 10 minutes after created_at
         });
