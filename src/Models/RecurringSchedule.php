@@ -20,7 +20,6 @@ class RecurringSchedule extends BaseModel
 
     public static function boot()
     {
-        
         parent::boot();
 
         static::creating(function ($schedule) {
@@ -30,7 +29,6 @@ class RecurringSchedule extends BaseModel
         });
 
         static::saving(function ($schedule) {
-            
             $room_model = app('room');
 
             if (empty($schedule->room_id)) {
