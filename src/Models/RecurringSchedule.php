@@ -20,7 +20,7 @@ class RecurringSchedule extends BaseModel
 
     public static function boot()
     {
-        $room_model = app('room');
+        
         parent::boot();
 
         static::creating(function ($schedule) {
@@ -30,6 +30,9 @@ class RecurringSchedule extends BaseModel
         });
 
         static::saving(function ($schedule) {
+            
+            $room_model = app('room');
+
             if (empty($schedule->room_id)) {
                 throw new \Exception('Schedule must be assigned to a room.');
             }
@@ -123,11 +126,13 @@ class RecurringSchedule extends BaseModel
      */
     public function generateSlotsForDate($date)
     {
+        $slot_model = app('slot');
+
         $slots = [];
         if ($this->matchDate($date)) {
             $startAt = Carbon::parse($date->format('Y-m-d') . ' ' . $this->time, $this->room->location->php_tz)->setTimeZone('UTC');
 
-            $slots[] = config('tipoff.model_class.slot')::make([
+            $slots[] = $slot_model::make([
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
