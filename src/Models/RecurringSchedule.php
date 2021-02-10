@@ -20,6 +20,7 @@ class RecurringSchedule extends BaseModel
 
     public static function boot()
     {
+        $room_model = app('room');
         parent::boot();
 
         static::creating(function ($schedule) {
@@ -38,7 +39,7 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            $room = config('tipoff.model_class.room')::findOrFail($schedule->room_id);
+            $room = $room_model::findOrFail($schedule->room_id);
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
