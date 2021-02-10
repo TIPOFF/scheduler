@@ -20,8 +20,8 @@ class HoldFactory extends Factory
     public function definition()
     {
         return [
-            'slot_id'        => randomOrCreate(config('tipoff.model_class.slot')),
-            'creator_id'     => randomOrCreate(config('tipoff.model_class.user')),
+            'slot_id'        => randomOrCreate(app('slot')),
+            'creator_id'     => randomOrCreate(app('user')),
         ];
     }
 }

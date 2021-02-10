@@ -49,21 +49,21 @@ class Block extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(Slot::class);
+        return $this->belongsTo(app('slot'));
     }
 
     public function room()
     {
-        return $this->hasOneThrough(config('tipoff.model_class.room'), Slot::class, 'id', 'id', 'slot_id', 'room_id');
+        return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'slot_id', 'room_id');
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 }

@@ -20,16 +20,16 @@ class RecurringScheduleFactory extends Factory
     public function definition()
     {
         return [
-            'room_id' => randomOrCreate(config('tipoff.model_class.room')),
-            'rate_id' => randomOrCreate(config('tipoff.model_class.rate')),
+            'room_id' => randomOrCreate(app('room')),
+            'rate_id' => randomOrCreate(app('rate')),
 
             'day'  => rand(1, 7),
             'time' => rand(0, 24) . ':00:00',
 
             'valid_from' => now(),
             'expires_at' => now()->addMonths(6),
-            'creator_id' => randomOrCreate(config('tipoff.model_class.user')),
-            'updater_id' => randomOrCreate(config('tipoff.model_class.user')),
+            'creator_id' => randomOrCreate(app('user')),
+            'updater_id' => randomOrCreate(app('user')),
         ];
     }
 }

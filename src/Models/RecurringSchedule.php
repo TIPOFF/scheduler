@@ -39,12 +39,11 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-
+            
             /** @var Model $roomModel */
             $roomModel = app('room');
-
             $room = $roomModel::findOrFail($schedule->room_id);
-
+            
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
@@ -89,17 +88,17 @@ class RecurringSchedule extends BaseModel
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function rate()
     {
-        return $this->belongsTo(config('tipoff.model_class.rate'));
+        return $this->belongsTo(app('rate'));
     }
 
     /**
@@ -128,14 +127,14 @@ class RecurringSchedule extends BaseModel
      */
     public function generateSlotsForDate($date)
     {
+        $slot_model = app('slot');
+
         $slots = [];
         if ($this->matchDate($date)) {
             $startAt = Carbon::parse($date->format('Y-m-d') . ' ' . $this->time, $this->room->location->php_tz)->setTimeZone('UTC');
 
-            /** @var Model $slotModel */
-            $slotModel = app('slot');
-
-            $slots[] = $slotModel::make([
+            /** @var Model $slot_model */
+            $slots[] = $slot_model::make([
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
@@ -152,7 +151,7 @@ class RecurringSchedule extends BaseModel
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     /**
