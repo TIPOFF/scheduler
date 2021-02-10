@@ -2,9 +2,9 @@
 
 namespace Tipoff\Scheduling\Policies;
 
-use Tipoff\Scheduling\Models\RecurringSchedule;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Tipoff\Scheduling\Models\RecurringSchedule;
 
 class RecurringSchedulePolicy
 {
