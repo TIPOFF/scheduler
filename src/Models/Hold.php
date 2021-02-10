@@ -10,12 +10,12 @@ class Hold extends BaseModel
     // find the slot
     public function slot()
     {
-        return $this->belongsTo(config('tipoff.model_class.slot'), 'slot_id');
+        return $this->belongsTo(app('slot'), 'slot_id');
     }
 
     // find the creator
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 }

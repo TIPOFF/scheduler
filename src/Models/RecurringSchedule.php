@@ -83,17 +83,17 @@ class RecurringSchedule extends BaseModel
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function rate()
     {
-        return $this->belongsTo(config('tipoff.model_class.rate'));
+        return $this->belongsTo(app('rate'));
     }
 
     /**
@@ -143,7 +143,7 @@ class RecurringSchedule extends BaseModel
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     /**

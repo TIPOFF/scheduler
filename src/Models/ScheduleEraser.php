@@ -70,12 +70,12 @@ class ScheduleEraser extends BaseModel
 
     public function creator()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     /**

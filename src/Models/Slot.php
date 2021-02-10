@@ -226,42 +226,42 @@ class Slot extends BaseModel
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function rate()
     {
-        return $this->belongsTo(config('tipoff.model_class.rate'));
+        return $this->belongsTo(app('rate'));
     }
 
     public function game()
     {
-        return $this->hasOne(config('tipoff.model_class.game'));
+        return $this->hasOne(app('gamme'));
     }
 
     public function supervision()
     {
-        return $this->belongsTo(config('tipoff.model_class.supervision'));
+        return $this->belongsTo(app('supervision'));
     }
 
     public function location()
     {
-        return $this->hasOneThrough(config('tipoff.model_class.location'), config('tipoff.model_class.room'), 'id', 'id', 'room_id', 'location_id');
+        return $this->hasOneThrough(app('location'), app('room'), 'id', 'id', 'room_id', 'location_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function blocks()
     {
-        return $this->hasMany(config('tipoff.model_class.block'));
+        return $this->hasMany(app('block'));
     }
 
     public function bookings()
     {
-        return $this->hasMany(config('tipoff.model_class.booking'));
+        return $this->hasMany(app('booking'));
     }
 
     /**
@@ -275,7 +275,7 @@ class Slot extends BaseModel
      */
     public function scopeLocation($query, $location)
     {
-        $locationModel = config('tipoff.model_class.location');
+        $locationModel = app('location');
 
         if ($location instanceof $locationModel) {
             $location = $location->id;
@@ -302,7 +302,7 @@ class Slot extends BaseModel
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 
     /**

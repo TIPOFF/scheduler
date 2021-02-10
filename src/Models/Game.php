@@ -65,42 +65,42 @@ class Game extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(Slot::class);
+        return $this->belongsTo(app('slot'));
     }
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function supervision()
     {
-        return $this->belongsTo(config('tipoff.model_class.supervision'));
+        return $this->belongsTo(app('supervision'));
     }
 
     public function monitor()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'monitor_id');
+        return $this->belongsTo(app('user'), 'monitor_id');
     }
 
     public function receptionist()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'receptionist_id');
+        return $this->belongsTo(app('user'), 'receptionist_id');
     }
 
     public function manager()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'manager_id');
+        return $this->belongsTo(app('user'), 'manager_id');
     }
 
     public function updater()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 
     public function scopeFilter($query, array $filters = [])
