@@ -22,7 +22,7 @@ class GameFilters extends Filters
      */
     protected function date($date)
     {
-        $this->builder->whereDate('date', $date);
+        return $this->builder->whereDate('date', $date);
     }
 
     /**
@@ -33,7 +33,7 @@ class GameFilters extends Filters
      */
     protected function location($location)
     {
-        $this->builder->whereHas('room', function ($query) use ($location) {
+        return $this->builder->whereHas('room', function ($query) use ($location) {
             $query->whereHas('location', function ($query) use ($location) {
                 return $query->where('slug', $location);
             });
