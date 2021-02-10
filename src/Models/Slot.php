@@ -14,9 +14,9 @@ class Slot extends BaseModel
     protected $guarded = ['id'];
 
     protected $casts = [
-        'date'              => 'datetime',
-        'start_at'          => 'datetime',
-        'end_at'            => 'datetime',
+        'date' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
         'room_available_at' => 'datetime',
     ];
 
@@ -375,7 +375,7 @@ class Slot extends BaseModel
      */
     public function isVirtual()
     {
-        return !$this->exists;
+        return ! $this->exists;
     }
 
     /**
@@ -400,7 +400,7 @@ class Slot extends BaseModel
             ->first();
 
         // Virtual  Slots
-        if (!$slot) {
+        if (! $slot) {
             /** @var string $slotCollection */
             $slotCollection = config('scheduling.collection_class.slot');
 
