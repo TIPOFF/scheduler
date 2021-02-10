@@ -33,7 +33,7 @@ class Slot extends BaseModel
             }
 
             /** @var Model $roomModel */
-            $roomModel = config('tipoff.model_class.room');
+            $roomModel = app('room');
             $room = $roomModel::findOrFail($slot->room_id);
 
             if (empty($slot->rate_id)) {
