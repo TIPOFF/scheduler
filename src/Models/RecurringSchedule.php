@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -38,7 +39,12 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            $room = config('tipoff.model_class.room')::findOrFail($schedule->room_id);
+
+            /** @var Model $roomModel */
+            $roomModel = app('room');
+
+            $room = $roomModel::findOrFail($schedule->room_id);
+
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
@@ -126,7 +132,10 @@ class RecurringSchedule extends BaseModel
         if ($this->matchDate($date)) {
             $startAt = Carbon::parse($date->format('Y-m-d') . ' ' . $this->time, $this->room->location->php_tz)->setTimeZone('UTC');
 
-            $slots[] = config('tipoff.model_class.slot')::make([
+            /** @var Model $slotModel */
+            $slotModel = app('slot');
+
+            $slots[] = $slotModel::make([
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
