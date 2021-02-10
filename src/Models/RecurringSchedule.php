@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -130,6 +131,7 @@ class RecurringSchedule extends BaseModel
         if ($this->matchDate($date)) {
             $startAt = Carbon::parse($date->format('Y-m-d') . ' ' . $this->time, $this->room->location->php_tz)->setTimeZone('UTC');
 
+            /** @var Model $slot_model */
             $slots[] = $slot_model::make([
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',

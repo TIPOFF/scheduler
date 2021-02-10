@@ -105,7 +105,6 @@ class Game extends BaseModel
 
     public function scopeFilter($query, array $filters = [])
     {
-        return (new GameFilters($filters))
-            ->apply($query);
+        return (new GameFilters($filters))->apply($query);
     }
 }
