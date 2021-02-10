@@ -236,7 +236,7 @@ class Slot extends BaseModel
 
     public function game()
     {
-        return $this->hasOne(app('gamme'));
+        return $this->hasOne(app('game'));
     }
 
     public function supervision()
