@@ -30,8 +30,6 @@ class RecurringSchedule extends BaseModel
         });
 
         static::saving(function ($schedule) {
-            $room_model = app('room');
-
             if (empty($schedule->room_id)) {
                 throw new \Exception('Schedule must be assigned to a room.');
             }
@@ -41,7 +39,11 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            $room = $room_model::findOrFail($schedule->room_id);
+            
+            /** @var Model $roomModel */
+            $roomModel = app('room');
+            $room = $roomModel::findOrFail($schedule->room_id);
+            
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
