@@ -11,3 +11,7 @@ All notable changes to `scheduling` will be documented in this file.
 ## 1.0.1 - 2021-02-11
 
 - update migrations
+
+## 1.1.0 - 2021-02-11
+
+- consolidate modifying migrations
