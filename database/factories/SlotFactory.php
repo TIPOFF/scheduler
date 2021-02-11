@@ -21,7 +21,7 @@ class SlotFactory extends Factory
     public function definition()
     {
         $startingDate = $this->faker->dateTimeBetween('now', '+5 days');
-        $room = randomOrCreate(config('tipoff.model_class.room'));
+        $room = randomOrCreate(app('room'));
         // Allows half to default to the room rate and half to ovveride the rate
         if ($this->faker->boolean) {
             $rate = randomOrCreate(app('rate'));
