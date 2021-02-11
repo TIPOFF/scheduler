@@ -404,15 +404,18 @@ class Slot extends BaseModel
             /** @var string $slotCollection */
             $slotCollection = config('scheduling.collection_class.slot');
 
-            $calendarService = app(config('scheduling.service_class.calendar'));
-            $date = $calendarService->generateDateFromSlotNumber($slotNumber);
-            $locationId = $calendarService->getLocationIdBySlotNumber($slotNumber);
-            $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($locationId, $date, $date);
-            $slots = new $slotCollection; //@TODO phuclh Need to refactor this line later.
-            $slot = $slots
-                ->applyRecurringSchedules($recurringSchedules, $date)
-                ->where('slot_number', $slotNumber)
-                ->first();
+            // TODO - pull in calendar service so it can be used
+            if (app()->has(config('scheduling.service_class.calendar'))) {
+                $calendarService = app(config('scheduling.service_class.calendar'));
+                $date = $calendarService->generateDateFromSlotNumber($slotNumber);
+                $locationId = $calendarService->getLocationIdBySlotNumber($slotNumber);
+                $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($locationId, $date, $date);
+                $slots = new $slotCollection; //@TODO phuclh Need to refactor this line later.
+                $slot = $slots
+                    ->applyRecurringSchedules($recurringSchedules, $date)
+                    ->where('slot_number', $slotNumber)
+                    ->first();
+            }
         }
 
         return $slot;
