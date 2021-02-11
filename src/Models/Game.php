@@ -5,10 +5,12 @@ use Illuminate\Support\Str;
 use Tipoff\Schediling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Game extends BaseModel
 {
     use HasPackageFactory;
+    use HasUpdater;
 
     protected $guarded = [
         'id',
@@ -57,9 +59,6 @@ class Game extends BaseModel
             if (isset($game->clues)) {
                 $game->finished = true;
             }
-            if (auth()->check()) {
-                $game->updater_id = auth()->id();
-            }
         });
     }
 
@@ -91,11 +90,6 @@ class Game extends BaseModel
     public function manager()
     {
         return $this->belongsTo(app('user'), 'manager_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function notes()

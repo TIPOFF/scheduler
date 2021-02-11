@@ -1,11 +1,13 @@
 <?php namespace Tipoff\Scheduling\Models;
 
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 
 class Block extends BaseModel
 {
     use HasPackageFactory;
+    use HasCreator;
 
     protected $guarded = ['id'];
 
@@ -21,9 +23,6 @@ class Block extends BaseModel
             }
             if (empty($block->participants)) {
                 $block->participants = 20; // This completely blocks the slot since there are no rooms with a 20 participant capacity
-            }
-            if (auth()->check()) {
-                $block->creator_id = auth()->id();
             }
         });
 
@@ -55,11 +54,6 @@ class Block extends BaseModel
     public function room()
     {
         return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'slot_id', 'room_id');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function notes()
