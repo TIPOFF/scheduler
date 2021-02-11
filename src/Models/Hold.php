@@ -1,8 +1,8 @@
 <?php namespace Tipoff\Scheduling\Models;
 
 use Tipoff\Support\Models\BaseModel;
-use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasCreator;
+use Tipoff\Support\Traits\HasPackageFactory;
 
 class Hold extends BaseModel
 {
@@ -14,5 +14,4 @@ class Hold extends BaseModel
     {
         return $this->belongsTo(app('slot'), 'slot_id');
     }
-
 }
