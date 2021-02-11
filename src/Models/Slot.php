@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Slot extends BaseModel
 {
     use HasPackageFactory;
+    use HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -251,11 +253,6 @@ class Slot extends BaseModel
     public function location()
     {
         return $this->hasOneThrough(app('location'), app('room'), 'id', 'id', 'room_id', 'location_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     public function blocks()

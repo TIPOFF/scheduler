@@ -5,11 +5,15 @@ use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class RecurringSchedule extends BaseModel
 {
     use HasPackageFactory;
+    use HasCreator;
+    use HasUpdater;
 
     protected $guarded = ['id'];
 
@@ -23,11 +27,6 @@ class RecurringSchedule extends BaseModel
     {
         parent::boot();
 
-        static::creating(function ($schedule) {
-            if (auth()->check()) {
-                $schedule->creator_id = auth()->id();
-            }
-        });
 
         static::saving(function ($schedule) {
             if (empty($schedule->room_id)) {
@@ -49,9 +48,6 @@ class RecurringSchedule extends BaseModel
             }
             if (empty($schedule->valid_from)) {
                 $schedule->valid_from = Carbon::today();
-            }
-            if (auth()->check()) {
-                $schedule->updater_id = auth()->id();
             }
         });
     }
@@ -91,10 +87,6 @@ class RecurringSchedule extends BaseModel
         return $this->belongsTo(app('room'));
     }
 
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
-    }
 
     public function rate()
     {
@@ -147,11 +139,6 @@ class RecurringSchedule extends BaseModel
         }
 
         return collect($slots);
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(app('user'), 'updater_id');
     }
 
     /**

@@ -2,10 +2,12 @@
 
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasCreator;
 
 class Hold extends BaseModel
 {
     use HasPackageFactory;
+    use HasCreator;
 
     // find the slot
     public function slot()
@@ -13,9 +15,4 @@ class Hold extends BaseModel
         return $this->belongsTo(app('slot'), 'slot_id');
     }
 
-    // find the creator
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
-    }
 }

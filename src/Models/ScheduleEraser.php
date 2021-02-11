@@ -2,10 +2,12 @@
 
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasCreator;
 
 class ScheduleEraser extends BaseModel
 {
     use HasPackageFactory;
+    use HasCreator;
 
     /**
      * The attributes that are mass assignable.
@@ -32,12 +34,6 @@ class ScheduleEraser extends BaseModel
     public static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            if (auth()->check()) {
-                $model->creator_id = auth()->id();
-            }
-        });
     }
 
     /**
@@ -66,11 +62,6 @@ class ScheduleEraser extends BaseModel
         }
 
         return $query;
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(app('user'), 'creator_id');
     }
 
     public function room()
