@@ -15,8 +15,6 @@ class RecurringSchedule extends BaseModel
     use HasCreator;
     use HasUpdater;
 
-    protected $guarded = ['id'];
-
     protected $casts = [
         'date' => 'date',
         'valid_from' => 'date',
