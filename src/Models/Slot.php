@@ -13,8 +13,6 @@ class Slot extends BaseModel
     use HasPackageFactory;
     use HasUpdater;
 
-    protected $guarded = ['id'];
-
     protected $casts = [
         'date' => 'datetime',
         'start_at' => 'datetime',
