@@ -1,6 +1,5 @@
 <?php namespace Tipoff\Scheduling\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -35,7 +34,7 @@ class Block extends BaseModel
 
     public function updateSlot()
     {
-        /** @var Model $slot */
+        /** @var Slot $slot */
         $slot = Slot::find($this->slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
