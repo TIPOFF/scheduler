@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tipoff\Scheduling\Policies;
 
-use App\Models\User;
+use Tipoff\Support\Contracts\Models\UserInterface;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Tipoff\Scheduling\Models\ScheduleEraser;
 
@@ -10,84 +12,37 @@ class ScheduleEraserPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
+    public function viewAny(UserInterface $user): bool
     {
         return $user->hasPermissionTo('view blocks') ? true : false;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\ScheduleEraser  $scheduleEraser
-     * @return mixed
-     */
-    public function view(User $user, ScheduleEraser $scheduleEraser)
+    public function view(UserInterface $user, ScheduleEraser $scheduleEraser): bool
     {
         return $user->hasPermissionTo('view blocks') ? true : false;
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
+    public function create(UserInterface $user): bool
     {
         return $user->hasPermissionTo('create blocks') ? true : false;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\ScheduleEraser  $scheduleEraser
-     * @return mixed
-     */
-    public function update(User $user, ScheduleEraser $scheduleEraser)
+    public function update(UserInterface $user, ScheduleEraser $scheduleEraser): bool
     {
         return $user->hasPermissionTo('update blocks') ? true : false;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\ScheduleEraser  $scheduleEraser
-     * @return mixed
-     */
-    public function delete(User $user, ScheduleEraser $scheduleEraser)
+    public function delete(UserInterface $user, ScheduleEraser $scheduleEraser): bool
     {
         return $user->hasPermissionTo('update blocks') ? true : false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\ScheduleEraser  $scheduleEraser
-     * @return mixed
-     */
-    public function restore(User $user, ScheduleEraser $scheduleEraser)
+    public function restore(UserInterface $user, ScheduleEraser $scheduleEraser): bool
     {
         return false;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\ScheduleEraser  $scheduleEraser
-     * @return mixed
-     */
-    public function forceDelete(User $user, ScheduleEraser $scheduleEraser)
+    public function forceDelete(UserInterface $user, ScheduleEraser $scheduleEraser): bool
     {
         return false;
     }

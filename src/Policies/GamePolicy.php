@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tipoff\Scheduling\Policies;
 
-use App\Models\User;
+use Tipoff\Support\Contracts\Models\UserInterface;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Tipoff\Scheduling\Models\Game;
 
@@ -10,84 +12,37 @@ class GamePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
+    public function viewAny(UserInterface $user): bool
     {
         return $user->hasPermissionTo('view games') ? true : false;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Game  $game
-     * @return mixed
-     */
-    public function view(User $user, Game $game)
+    public function view(UserInterface $user, Game $game): bool
     {
         return $user->hasPermissionTo('view games') ? true : false;
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
+    public function create(UserInterface $user): bool
     {
         return false;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Game  $game
-     * @return mixed
-     */
-    public function update(User $user, Game $game)
+    public function update(UserInterface $user, Game $game): bool
     {
         return $user->hasPermissionTo('update games') ? true : false;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Game  $game
-     * @return mixed
-     */
-    public function delete(User $user, Game $game)
+    public function delete(UserInterface $user, Game $game): bool
     {
         return false;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Game  $game
-     * @return mixed
-     */
-    public function restore(User $user, Game $game)
+    public function restore(UserInterface $user, Game $game): bool
     {
         return false;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Game  $game
-     * @return mixed
-     */
-    public function forceDelete(User $user, Game $game)
+    public function forceDelete(UserInterface $user, Game $game): bool
     {
         return false;
     }
