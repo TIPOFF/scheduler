@@ -27,7 +27,6 @@ class AddSchedulingPermissions extends Migration
                      'view slots',
                      'create slots',
                      'update slots',
-                     'delete slots',
                  ] as $name) {
                 app(Permission::class)::findOrCreate($name, null);
             };
