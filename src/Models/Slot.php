@@ -1,16 +1,17 @@
 <?php namespace Tipoff\Scheduling\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Slot extends BaseModel
 {
     use HasPackageFactory;
-
-    protected $guarded = ['id'];
+    use HasUpdater;
 
     protected $casts = [
         'date' => 'datetime',
@@ -30,7 +31,10 @@ class Slot extends BaseModel
             if (empty($slot->start_at)) {
                 throw new \Exception('An availability slot must have a date & time.');
             }
-            $room = config('tipoff.model_class.room')::findOrFail($slot->room_id);
+
+            /** @var Model $roomModel */
+            $roomModel = app('room');
+            $room = $roomModel::findOrFail($slot->room_id);
 
             if (empty($slot->rate_id)) {
                 $slot->rate_id = $room->rate_id;
@@ -86,7 +90,7 @@ class Slot extends BaseModel
     {
         $slotNumber =
             str_replace('-', '', substr($this->date, 2, 8))
-            . (string) $this->start_at->format('Hi')
+            . (string)$this->start_at->format('Hi')
             . '-' . $this->room->location_id
             . '-' . $this->room->id;
 
@@ -169,7 +173,7 @@ class Slot extends BaseModel
 
         Cache::put(
             $this->getHoldCacheKey(),
-            ['user_id' => $userId, 'expires_at' => (string) $expiresAt],
+            ['user_id' => $userId, 'expires_at' => (string)$expiresAt],
             $expiresAt
         );
 
@@ -181,7 +185,7 @@ class Slot extends BaseModel
         Session::put('guest:hold', $slotData);
 
         self::resolveSlot($slotData['slot_number'])
-            ->setHold(Session::getId());
+            ->setHold((int)Session::getId());
     }
 
     /**
@@ -226,42 +230,37 @@ class Slot extends BaseModel
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function rate()
     {
-        return $this->belongsTo(config('tipoff.model_class.rate'));
+        return $this->belongsTo(app('rate'));
     }
 
     public function game()
     {
-        return $this->hasOne(config('tipoff.model_class.game'));
+        return $this->hasOne(app('game'));
     }
 
     public function supervision()
     {
-        return $this->belongsTo(config('tipoff.model_class.supervision'));
+        return $this->belongsTo(app('supervision'));
     }
 
     public function location()
     {
-        return $this->hasOneThrough(config('tipoff.model_class.location'), config('tipoff.model_class.room'), 'id', 'id', 'room_id', 'location_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->hasOneThrough(app('location'), app('room'), 'id', 'id', 'room_id', 'location_id');
     }
 
     public function blocks()
     {
-        return $this->hasMany(config('tipoff.model_class.block'));
+        return $this->hasMany(app('block'));
     }
 
     public function bookings()
     {
-        return $this->hasMany(config('tipoff.model_class.booking'));
+        return $this->hasMany(app('booking'));
     }
 
     /**
@@ -275,7 +274,8 @@ class Slot extends BaseModel
      */
     public function scopeLocation($query, $location)
     {
-        $locationModel = config('tipoff.model_class.location');
+        /** @var Model $locationModel */
+        $locationModel = app('location');
 
         if ($location instanceof $locationModel) {
             $location = $location->id;
@@ -293,7 +293,7 @@ class Slot extends BaseModel
     /**
      * Get hold attribute.
      *
-     * @return object
+     * @return null|object
      */
     public function getHoldAttribute()
     {
@@ -302,7 +302,7 @@ class Slot extends BaseModel
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 
     /**
@@ -396,15 +396,21 @@ class Slot extends BaseModel
 
         // Virtual  Slots
         if (! $slot) {
-            $calendarService = app(config('scheduling.service_class.calendar'));
-            $date = $calendarService->generateDateFromSlotNumber($slotNumber);
-            $locationId = $calendarService->getLocationIdBySlotNumber($slotNumber);
-            $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($locationId, $date, $date);
-            $slots = new SlotsCollection(); //@TODO phuclh Need to refactor this line later.
-            $slot = $slots
-                ->applyRecurringSchedules($recurringSchedules, $date)
-                ->where('slot_number', $slotNumber)
-                ->first();
+            /** @var string $slotCollection */
+            $slotCollection = config('scheduling.collection_class.slot');
+
+            // TODO - pull in calendar service so it can be used
+            if (app()->has(config('scheduling.service_class.calendar'))) {
+                $calendarService = app(config('scheduling.service_class.calendar'));
+                $date = $calendarService->generateDateFromSlotNumber($slotNumber);
+                $locationId = $calendarService->getLocationIdBySlotNumber($slotNumber);
+                $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($locationId, $date, $date);
+                $slots = new $slotCollection; //@TODO phuclh Need to refactor this line later.
+                $slot = $slots
+                    ->applyRecurringSchedules($recurringSchedules, $date)
+                    ->where('slot_number', $slotNumber)
+                    ->first();
+            }
         }
 
         return $slot;

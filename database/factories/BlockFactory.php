@@ -20,10 +20,10 @@ class BlockFactory extends Factory
     public function definition()
     {
         return [
-            'slot_id'      => randomOrCreate(config('tipoff.model_class.slot')),
+            'slot_id'      => randomOrCreate(app('slot')),
             'participants' => $this->faker->numberBetween(1, 10),
             'type'         => $this->faker->word,
-            'creator_id'   => randomOrCreate(config('tipoff.model_class.user')),
+            'creator_id'   => randomOrCreate(app('user')),
         ];
     }
 }

@@ -39,7 +39,7 @@ abstract class Filters
     /**
      * Apply the filters.
      *
-     * @param  Builder $builder
+     * @param Builder $builder
      * @return Builder
      */
     public function apply($builder)
@@ -60,7 +60,7 @@ abstract class Filters
     /**
      * Fetch all relevant filters.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function getFilters()
     {

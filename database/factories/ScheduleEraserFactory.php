@@ -24,8 +24,8 @@ class ScheduleEraserFactory extends Factory
         return [
             'start_at'   => now()->addDays($days),
             'end_at'     => now()->addDays($days + 1),
-            'room_id'    => randomOrCreate(config('tipoff.model_class.room')),
-            'creator_id' => randomOrCreate(config('tipoff.model_class.user')),
+            'room_id'    => randomOrCreate(app('room')),
+            'creator_id' => randomOrCreate(app('user')),
         ];
     }
 }

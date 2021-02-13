@@ -5,10 +5,12 @@ use Illuminate\Support\Str;
 use Tipoff\Schediling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class Game extends BaseModel
 {
     use HasPackageFactory;
+    use HasUpdater;
 
     protected $guarded = [
         'id',
@@ -32,8 +34,12 @@ class Game extends BaseModel
             do {
                 $token = Str::of(Carbon::parse($game->slot->start_at)->setTimeZone($game->room->location->php_tz)->format('ymdB'))->substr(1, 7).Str::upper(Str::random(3));
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
+
+            /** @var Slot $slot */
+            $slot = Slot::findOrFail($game->slot_id);
+
             $game->game_number = $token;
-            $game->initiated_at = Slot::findOrFail($game->slot_id)->first()->start_at;
+            $game->initiated_at = $slot->start_at;
             $game->participants = $game->slot->participants;
         });
 
@@ -57,55 +63,46 @@ class Game extends BaseModel
             if (isset($game->clues)) {
                 $game->finished = true;
             }
-            if (auth()->check()) {
-                $game->updater_id = auth()->id();
-            }
         });
     }
 
     public function slot()
     {
-        return $this->belongsTo(Slot::class);
+        return $this->belongsTo(app('slot'));
     }
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
+        return $this->belongsTo(app('room'));
     }
 
     public function supervision()
     {
-        return $this->belongsTo(config('tipoff.model_class.supervision'));
+        return $this->belongsTo(app('supervision'));
     }
 
     public function monitor()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'monitor_id');
+        return $this->belongsTo(app('user'), 'monitor_id');
     }
 
     public function receptionist()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'receptionist_id');
+        return $this->belongsTo(app('user'), 'receptionist_id');
     }
 
     public function manager()
     {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'manager_id');
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
+        return $this->belongsTo(app('user'), 'manager_id');
     }
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 
     public function scopeFilter($query, array $filters = [])
     {
-        return (new GameFilters($filters))
-            ->apply($query);
+        return (new GameFilters($filters))->apply($query);
     }
 }

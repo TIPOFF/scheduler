@@ -21,15 +21,15 @@ class SlotFactory extends Factory
     public function definition()
     {
         $startingDate = $this->faker->dateTimeBetween('now', '+5 days');
-        $room = randomOrCreate(config('tipoff.model_class.room'));
+        $room = randomOrCreate(app('room'));
         // Allows half to default to the room rate and half to ovveride the rate
         if ($this->faker->boolean) {
-            $rate = randomOrCreate(config('tipoff.model_class.rate'));
+            $rate = randomOrCreate(app('rate'));
         } else {
             $rate = null;
         }
 
-        $schedule = randomOrCreate(config('tipoff.model_class.recurring_schedule'));
+        $schedule = randomOrCreate(app('schedule'));
         $dates = [];
         $days = [];
         $initialDate = $schedule->valid_from;
@@ -50,7 +50,7 @@ class SlotFactory extends Factory
             'schedule_type'     => $type,
             'schedule_id'       => $schedule->id,
             'rate_id'           => $rate,
-            'supervision_id'    => randomOrCreate(config('tipoff.model_class.supervision')),
+            'supervision_id'    => randomOrCreate(app('supervision')),
             'start_at'          => $startAt,
             'end_at'            => $endAt,
         ];

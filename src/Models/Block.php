@@ -1,13 +1,13 @@
 <?php namespace Tipoff\Scheduling\Models;
 
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 
 class Block extends BaseModel
 {
     use HasPackageFactory;
-
-    protected $guarded = ['id'];
+    use HasCreator;
 
     protected $casts = [];
 
@@ -22,9 +22,6 @@ class Block extends BaseModel
             if (empty($block->participants)) {
                 $block->participants = 20; // This completely blocks the slot since there are no rooms with a 20 participant capacity
             }
-            if (auth()->check()) {
-                $block->creator_id = auth()->id();
-            }
         });
 
         static::saved(function ($block) {
@@ -37,11 +34,15 @@ class Block extends BaseModel
 
     public function updateSlot()
     {
+        /** @var Slot $slot */
         $slot = Slot::find($this->slot_id);
+
         $slot->participants_blocked = $slot->blocks->sum('participants');
+
         if (auth()->check()) {
             $slot->updater_id = auth()->id();
         }
+
         $slot->save();
 
         return $this;
@@ -49,21 +50,16 @@ class Block extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(Slot::class);
+        return $this->belongsTo(app('slot'));
     }
 
     public function room()
     {
-        return $this->hasOneThrough(config('tipoff.model_class.room'), Slot::class, 'id', 'id', 'slot_id', 'room_id');
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'slot_id', 'room_id');
     }
 
     public function notes()
     {
-        return $this->morphMany(config('tipoff.model_class.note'), 'noteable');
+        return $this->morphMany(app('note'), 'noteable');
     }
 }

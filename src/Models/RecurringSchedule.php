@@ -2,15 +2,18 @@
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Tipoff\Support\Models\BaseModel;
+use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Support\Traits\HasUpdater;
 
 class RecurringSchedule extends BaseModel
 {
     use HasPackageFactory;
-
-    protected $guarded = ['id'];
+    use HasCreator;
+    use HasUpdater;
 
     protected $casts = [
         'date' => 'date',
@@ -22,11 +25,6 @@ class RecurringSchedule extends BaseModel
     {
         parent::boot();
 
-        static::creating(function ($schedule) {
-            if (auth()->check()) {
-                $schedule->creator_id = auth()->id();
-            }
-        });
 
         static::saving(function ($schedule) {
             if (empty($schedule->room_id)) {
@@ -38,15 +36,16 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            $room = config('tipoff.model_class.room')::findOrFail($schedule->room_id);
+            
+            /** @var Model $roomModel */
+            $roomModel = app('room');
+            $room = $roomModel::findOrFail($schedule->room_id);
+            
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
             if (empty($schedule->valid_from)) {
                 $schedule->valid_from = Carbon::today();
-            }
-            if (auth()->check()) {
-                $schedule->updater_id = auth()->id();
             }
         });
     }
@@ -83,17 +82,12 @@ class RecurringSchedule extends BaseModel
 
     public function room()
     {
-        return $this->belongsTo(config('tipoff.model_class.room'));
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'creator_id');
+        return $this->belongsTo(app('room'));
     }
 
     public function rate()
     {
-        return $this->belongsTo(config('tipoff.model_class.rate'));
+        return $this->belongsTo(app('rate'));
     }
 
     /**
@@ -122,11 +116,14 @@ class RecurringSchedule extends BaseModel
      */
     public function generateSlotsForDate($date)
     {
+        $slot_model = app('slot');
+
         $slots = [];
         if ($this->matchDate($date)) {
             $startAt = Carbon::parse($date->format('Y-m-d') . ' ' . $this->time, $this->room->location->php_tz)->setTimeZone('UTC');
 
-            $slots[] = config('tipoff.model_class.slot')::make([
+            /** @var Model $slot_model */
+            $slots[] = $slot_model::make([
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
@@ -139,11 +136,6 @@ class RecurringSchedule extends BaseModel
         }
 
         return collect($slots);
-    }
-
-    public function updater()
-    {
-        return $this->belongsTo(config('tipoff.model_class.user'), 'updater_id');
     }
 
     /**

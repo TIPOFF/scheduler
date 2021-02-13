@@ -35,10 +35,10 @@ class GameFactory extends Factory
             'slot_id'               => Slot::factory()->create(['start_at' => $startingDate]),
             'time'                  => $time,
             'clues'                 => $clues,
-            'supervision_id'        => randomOrCreate(config('tipoff.model_class.supervision')),
-            'monitor_id'            => randomOrCreate(config('tipoff.model_class.user')),
-            'receptionist_id'       => randomOrCreate(config('tipoff.model_class.user')),
-            'manager_id'            => randomOrCreate(config('tipoff.model_class.user')),
+            'supervision_id'        => randomOrCreate(app('supervision')),
+            'monitor_id'            => randomOrCreate(app('user')),
+            'receptionist_id'       => randomOrCreate(app('user')),
+            'manager_id'            => randomOrCreate(app('user')),
         ];
     }
 }
