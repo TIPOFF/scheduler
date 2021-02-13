@@ -27,7 +27,7 @@ class SchedulingServiceProvider extends TipoffServiceProvider
                 Game::class => GamePolicy::class,
                 RecurringSchedule::class => RecurringSchedulePolicy::class,
                 ScheduleEraser::class => ScheduleEraserPolicy::class,
-                Slot::class => SlotPolicy::class
+                Slot::class => SlotPolicy::class,
             ])
             ->name('scheduling')
             ->hasConfigFile();

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Policies;
 
-use Tipoff\Support\Contracts\Models\UserInterface;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Tipoff\Scheduling\Models\Block;
+use Tipoff\Support\Contracts\Models\UserInterface;
 
 class BlockPolicy
 {
