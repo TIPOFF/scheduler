@@ -47,10 +47,6 @@ class Slot extends BaseModel
                 ->generateDates()
                 ->generateSlotNumber()
                 ->updateParticipants();
-
-            if (auth()->check()) {
-                $slot->updater_id = auth()->id();
-            }
         });
     }
 
