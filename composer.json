@@ -44,10 +44,7 @@
         "laravel": {
             "providers": [
                 "Tipoff\\Scheduling\\SchedulingServiceProvider"
-            ],
-            "aliases": {
-                "Scheduling": "Tipoff\\Scheduling\\SchedulingFacade"
-            }
+            ]
         }
     },
     "repositories": [
