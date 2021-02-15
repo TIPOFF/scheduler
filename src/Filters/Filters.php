@@ -1,4 +1,8 @@
-<?php namespace Tipoff\Schediling\Filters;
+<?php
+
+declare(strict_types=1);
+
+namespace Tipoff\Schediling\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
