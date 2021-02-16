@@ -16,6 +16,8 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
+        "tipoff/escape-room": "^1.1",
+        "tipoff/locations": "^1.1",
         "tipoff/support": "^1.2.7"
     },
     "require-dev": {
