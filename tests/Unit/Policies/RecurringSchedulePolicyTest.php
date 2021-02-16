@@ -45,7 +45,7 @@ class RecurringSchedulePolicyTest extends TestCase
             'create-false' => [ 'create', self::createPermissionedUser('create schedules', false), false ],
             'update-true' => [ 'update', self::createPermissionedUser('update schedules', true), true ],
             'update-false' => [ 'update', self::createPermissionedUser('update schedules', false), false ],
-            'delete-true' => [ 'delete', self::createPermissionedUser('delete schedules', true), false ],
+            'delete-true' => [ 'delete', self::createPermissionedUser('delete schedules', true), true ],
             'delete-false' => [ 'delete', self::createPermissionedUser('delete schedules', false), false ],
         ];
     }

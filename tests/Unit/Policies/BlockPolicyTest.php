@@ -45,7 +45,7 @@ class BlockPolicyTest extends TestCase
             'create-false' => [ 'create', self::createPermissionedUser('create blocks', false), false ],
             'update-true' => [ 'update', self::createPermissionedUser('update blocks', true), true ],
             'update-false' => [ 'update', self::createPermissionedUser('update blocks', false), false ],
-            'delete-true' => [ 'delete', self::createPermissionedUser('delete blocks', true), false ],
+            'delete-true' => [ 'delete', self::createPermissionedUser('delete blocks', true), true ],
             'delete-false' => [ 'delete', self::createPermissionedUser('delete blocks', false), false ],
         ];
     }
