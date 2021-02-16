@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Models;
 
+use Tipoff\Support\Contracts\Scheduling\BlockInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 
-class Block extends BaseModel
+class Block extends BaseModel implements BlockInterface
 {
     use HasPackageFactory;
     use HasCreator;

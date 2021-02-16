@@ -7,11 +7,12 @@ namespace Tipoff\Scheduling\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tipoff\Schediling\Filters\GameFilters;
+use Tipoff\Support\Contracts\Scheduling\GameInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class Game extends BaseModel
+class Game extends BaseModel implements GameInterface
 {
     use HasPackageFactory;
     use HasUpdater;
@@ -40,7 +41,7 @@ class Game extends BaseModel
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
             /** @var Slot $slot */
-            $slot = Slot::findOrFail($game->slot_id);
+            $slot = Slot::query()->findOrFail($game->slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;

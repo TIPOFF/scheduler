@@ -6,7 +6,7 @@ namespace Tipoff\Scheduling\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Tipoff\Scheduling\Models\RecurringSchedule;
-use Tipoff\Support\Contracts\Models\UserInterface;
+use Tipoff\Support\Contracts\Authorization\UserInterface;
 
 class RecurringSchedulePolicy
 {

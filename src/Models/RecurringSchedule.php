@@ -8,12 +8,13 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tipoff\Support\Contracts\Scheduling\RecurringScheduleInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class RecurringSchedule extends BaseModel
+class RecurringSchedule extends BaseModel implements RecurringScheduleInterface
 {
     use HasPackageFactory;
     use HasCreator;
@@ -40,11 +41,11 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            
+
             /** @var Model $roomModel */
             $roomModel = app('room');
             $room = $roomModel::findOrFail($schedule->room_id);
-            
+
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }

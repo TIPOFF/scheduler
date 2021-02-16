@@ -8,11 +8,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
+use Tipoff\Support\Contracts\EscapeRoom\RateInterface;
+use Tipoff\Support\Contracts\EscapeRoom\RoomInterface;
+use Tipoff\Support\Contracts\Fees\FeeInterface;
+use Tipoff\Support\Contracts\Scheduling\SlotInterface;
+use Tipoff\Support\Contracts\Taxes\TaxInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class Slot extends BaseModel
+class Slot extends BaseModel implements SlotInterface
 {
     use HasPackageFactory;
     use HasUpdater;
@@ -131,7 +136,7 @@ class Slot extends BaseModel
      *
      * @return object|null
      */
-    public function getHold()
+    public function getHold(): ?object
     {
         return Cache::get($this->getHoldCacheKey());
     }
@@ -141,7 +146,7 @@ class Slot extends BaseModel
      *
      * @return self
      */
-    public function releaseHold()
+    public function releaseHold(): self
     {
         Cache::delete($this->getHoldCacheKey());
 
@@ -165,7 +170,7 @@ class Slot extends BaseModel
      * @param Carbon|null $expiresAt
      * @return self
      */
-    public function setHold($userId, $expiresAt = null)
+    public function setHold(int $userId, ?Carbon $expiresAt = null): self
     {
         if (empty($expiresAt)) {
             $expiresAt = now()->addSeconds(config('services.slot.hold.lifetime', 600));
@@ -305,34 +310,42 @@ class Slot extends BaseModel
         return $this->morphMany(app('note'), 'noteable');
     }
 
-    /**
-     * Get rate for slot.
-     *
-     * @return mixed
-     */
-    public function getRate()
+    public function getRate(): ?RateInterface
     {
-        return $this->rate;
+        /** @var RateInterface $result */
+        $result = findModel(RateInterface::class, $this->rate_id);
+
+        return $result;
     }
 
-    /**
-     * Get tax for slot.
-     *
-     * @return mixed
-     */
-    public function getTax()
+    public function getRoom(): ?RoomInterface
     {
-        return $this->room->location->bookingTax;
+        /** @var RoomInterface $result */
+        $result = findModel(RoomInterface::class, $this->room_id);
+
+        return $result;
     }
 
-    /**
-     * Get fee for slot.
-     *
-     * @return mixed
-     */
-    public function getFee()
+    public function getTax(): ?TaxInterface
     {
-        return $this->room->location->bookingFee;
+        if ($room = $this->getRoom()) {
+            if ($location = $room->getLocation()) {
+                return $location->getBookingTax();
+            }
+        }
+
+        return null;
+    }
+
+    public function getFee(): ?FeeInterface
+    {
+        if ($room = $this->getRoom()) {
+            if ($location = $room->getLocation()) {
+                return $location->getBookingFee();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -383,13 +396,7 @@ class Slot extends BaseModel
         return $this->schedule_type == 'recurring_schedules';
     }
 
-    /**
-     * Find existing or virtual slot.
-     *
-     * @param string $slotNumber
-     * @return Slot|null
-     */
-    public static function resolveSlot($slotNumber)
+    public static function resolveSlot(string $slotNumber): ?SlotInterface
     {
         $slot = self::where('slot_number', $slotNumber)
             ->first();
@@ -414,5 +421,15 @@ class Slot extends BaseModel
         }
 
         return $slot;
+    }
+
+    public function getStartAt(): ?Carbon
+    {
+        return $this->start_at;
+    }
+
+    public function getFormattedStartAt(): ?string
+    {
+        return $this->formatted_start_at;
     }
 }
