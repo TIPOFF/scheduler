@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tipoff\Scheduling\Filters;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
-
 
 class FutureBlocks extends BooleanFilter
 {
