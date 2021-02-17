@@ -88,8 +88,13 @@ class Slot extends BaseModel
 
     public function generateSlotNumber()
     {
-        $slotNumber =
-            str_replace('-', '', substr($this->date, 2, 8))
+        if ($this->date instanceof \Illuminate\Support\Carbon) {
+            $slotDate = $this->date->toDateString();
+        } else {
+            $slotDate = $this->date;
+        }
+        
+        $slotNumber = str_replace('-', '', substr($slotDate, 2, 8))
             . (string)$this->start_at->format('Hi')
             . '-' . $this->room->location_id
             . '-' . $this->room->id;
