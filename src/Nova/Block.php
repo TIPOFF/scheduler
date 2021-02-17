@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
+use Tipoff\EscapeRoom\Filters\FutureBlocks;
 
 class Block extends BaseResource
 {
@@ -95,7 +96,7 @@ class Block extends BaseResource
     public function filters(Request $request)
     {
         return [
-            new Filters\FutureBlocks,
+            new FutureBlocks,
             new Filters\SlotRoomLocation,
             new Filters\SlotRoom,
         ];

@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
+use Tipoff\EscapeRoom\Filters\RoomLocation;
 
 class RecurringSchedule extends BaseResource
 {
@@ -114,7 +115,7 @@ class RecurringSchedule extends BaseResource
     public function filters(Request $request)
     {
         return [
-            new Filters\RoomLocation,
+            new RoomLocation,
             new Filters\Room,
         ];
     }
