@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Nova\Filters;
+declare(strict_types=1);
+
+namespace Tipoff\Scheduling\Nova\Filters;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
