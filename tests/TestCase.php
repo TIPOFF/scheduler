@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Tests;
 
+use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
+use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduling\SchedulingServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
@@ -14,6 +16,8 @@ class TestCase extends BaseTestCase
     {
         return [
             SupportServiceProvider::class,
+            LocationsServiceProvider::class,
+            EscapeRoomServiceProvider::class,
             SchedulingServiceProvider::class,
         ];
     }

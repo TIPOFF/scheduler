@@ -33,7 +33,7 @@ class SlotFactory extends Factory
             $rate = null;
         }
 
-        $schedule = randomOrCreate(app('schedule'));
+        $schedule = randomOrCreate(app('recurring_schedule'));
         $dates = [];
         $days = [];
         $initialDate = $schedule->valid_from;
