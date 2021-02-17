@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Schediling\Filters;
+namespace Tipoff\Scheduling\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
