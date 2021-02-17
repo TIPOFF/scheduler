@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
@@ -26,9 +27,8 @@ class SlotRoomLocation extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $value
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function apply(Request $request, $query, $value)
@@ -36,8 +36,7 @@ class SlotRoomLocation extends Filter
         return $query
             ->join('slots', 'slots.id', 'slot_id')
             ->join('rooms', 'rooms.id', 'slots.room_id')
-            ->where('rooms.location_id', $value)
-            ->get();
+            ->where('rooms.location_id', $value);
     }
 
     /**
@@ -48,6 +47,9 @@ class SlotRoomLocation extends Filter
      */
     public function options(Request $request)
     {
-        return \Tipoff\Locations\Models\Location::pluck('id', 'name');
+        /** @var Model $locationModel */
+        $locationModel = app('location');
+
+        return $locationModel::pluck('id', 'name');
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Nova\Filters;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
@@ -46,8 +47,9 @@ class SlotRoom extends Filter
      */
     public function options(Request $request)
     {
-        $models = \Tipoff\EscapeRoom\Models\Room::all();
+        /** @var Model $models */
+        $roomModel = app('room');
 
-        return $models->pluck('id', 'name')->all();
+        return $roomModel->pluck('id', 'name')->all();
     }
 }
