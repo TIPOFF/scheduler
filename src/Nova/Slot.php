@@ -15,6 +15,9 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
+use Tipoff\EscapeRoom\Filters\RoomLocation;
+use Tipoff\EscapeRoom\Filters\Room;
+use Tipoff\Scheduling\Filters\FutureSlots;
 
 class Slot extends BaseResource
 {
@@ -117,9 +120,10 @@ class Slot extends BaseResource
     public function filters(Request $request)
     {
         return [
-            new Filters\FutureSlots,
-            new Filters\RoomLocation,
-            new Filters\Room,
+            // TODO replace these stubs. Add $filters from $request?
+            new FutureSlots($filters = []),
+            new RoomLocation($filters = []),
+            new Room($filters = []),
         ];
     }
 }
