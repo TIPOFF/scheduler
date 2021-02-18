@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
+        "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^1.0.1",
         "tipoff/escape-room": "^1.1",
         "tipoff/locations": "^2.0",
