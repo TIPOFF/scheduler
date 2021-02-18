@@ -25,6 +25,12 @@ class Game extends BaseResource
         'id',
     ];
 
+    /** @psalm-suppress UndefinedClass */
+    protected array $filterClassList = [
+        \Tipoff\EscapeRoom\Filters\Room::class,
+        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+    ];
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->hasRole([
@@ -89,13 +95,5 @@ class Game extends BaseResource
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            new Filters\RoomLocation,
-            new Filters\Room,
-        ];
     }
 }

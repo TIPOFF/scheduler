@@ -27,6 +27,13 @@ class Block extends BaseResource
         'id',
     ];
 
+    /** @psalm-suppress UndefinedClass */
+    protected array $filterClassList = [
+        \Tipoff\Scheduling\Filters\FutureBlocks::class,
+        \Tipoff\Scheduling\Filters\SlotRoomLocation::class,
+        \Tipoff\Scheduling\Filters\SlotRoom::class,
+    ];
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->hasRole([
@@ -93,14 +100,5 @@ class Block extends BaseResource
             DateTime::make('Created At')->exceptOnForms(),
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            new FutureBlocks($filters = []),
-            new SlotRoomLocation($filters = []),
-            new SlotRoom($filters = []),
-        ];
     }
 }

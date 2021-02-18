@@ -29,6 +29,13 @@ class Slot extends BaseResource
         'start_at',
     ];
 
+    /** @psalm-suppress UndefinedClass */
+    protected array $filterClassList = [
+        \Tipoff\Scheduling\Filters\FutureSlots::class,
+        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Filters\Room::class
+    ];
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->hasRole([
@@ -115,15 +122,5 @@ class Slot extends BaseResource
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            // TODO replace these stubs. Add $filters from $request?
-            new FutureSlots($filters = []),
-            new RoomLocation($filters = []),
-            new Room($filters = []),
-        ];
     }
 }

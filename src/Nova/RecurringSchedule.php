@@ -26,6 +26,12 @@ class RecurringSchedule extends BaseResource
         'id',
     ];
 
+    /** @psalm-suppress UndefinedClass */
+    protected array $filterClassList = [
+        \Tipoff\EscapeRoom\Filters\Room::class,
+        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+    ];
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->hasRole([
@@ -111,14 +117,5 @@ class RecurringSchedule extends BaseResource
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            // TODO replace these stubs. Add $filters from $request?
-            new RoomLocation($filters = []),
-            new Room($filters = []),
-        ];
     }
 }

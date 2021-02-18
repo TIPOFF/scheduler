@@ -23,6 +23,12 @@ class ScheduleEraser extends BaseResource
         'id',
     ];
 
+    /** @psalm-suppress UndefinedClass */
+    protected array $filterClassList = [
+        \Tipoff\EscapeRoom\Filters\Room::class,
+        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+    ];
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if ($request->user()->hasRole([
@@ -75,14 +81,5 @@ class ScheduleEraser extends BaseResource
             DateTime::make('Created At')->exceptOnForms(),
             DateTime::make('Updated At')->exceptOnForms(),
         ]);
-    }
-
-    public function filters(Request $request)
-    {
-        return [
-            // TODO replace these stubs. Add $filters from $request?
-            new RoomLocation($filters = []),
-            new Room($filters = []),
-        ];
     }
 }
