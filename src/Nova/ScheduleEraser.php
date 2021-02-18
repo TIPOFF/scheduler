@@ -9,8 +9,6 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Tipoff\EscapeRoom\Filters\Room;
-use Tipoff\EscapeRoom\Filters\RoomLocation;
 use Tipoff\Support\Nova\BaseResource;
 
 class ScheduleEraser extends BaseResource

@@ -14,9 +14,6 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Tipoff\EscapeRoom\Filters\Room;
-use Tipoff\EscapeRoom\Filters\RoomLocation;
-use Tipoff\Scheduling\Filters\FutureSlots;
 use Tipoff\Support\Nova\BaseResource;
 
 class Slot extends BaseResource
@@ -33,7 +30,7 @@ class Slot extends BaseResource
     protected array $filterClassList = [
         \Tipoff\Scheduling\Filters\FutureSlots::class,
         \Tipoff\EscapeRoom\Filters\RoomLocation::class,
-        \Tipoff\EscapeRoom\Filters\Room::class
+        \Tipoff\EscapeRoom\Filters\Room::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)

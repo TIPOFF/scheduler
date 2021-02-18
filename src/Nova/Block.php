@@ -12,9 +12,6 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Tipoff\EscapeRoom\Filters\FutureBlocks;
-use Tipoff\EscapeRoom\Filters\SlotRoom;
-use Tipoff\EscapeRoom\Filters\SlotRoomLocation;
 use Tipoff\Support\Nova\BaseResource;
 
 class Block extends BaseResource
