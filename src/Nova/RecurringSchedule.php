@@ -43,6 +43,7 @@ class RecurringSchedule extends BaseResource
             return $query;
         }
 
+        /** @psalm-suppress UndefinedMagicMethod */
         return $request->withOrdering($request->withFilters(
             $query->select('recurring_schedules.*')
                 ->join('rooms', 'rooms.id', '=', 'recurring_schedules.room_id')
