@@ -14,10 +14,10 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Tipoff\Support\Nova\BaseResource;
-use Tipoff\EscapeRoom\Filters\RoomLocation;
 use Tipoff\EscapeRoom\Filters\Room;
+use Tipoff\EscapeRoom\Filters\RoomLocation;
 use Tipoff\Scheduling\Filters\FutureSlots;
+use Tipoff\Support\Nova\BaseResource;
 
 class Slot extends BaseResource
 {
