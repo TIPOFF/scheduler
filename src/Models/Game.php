@@ -10,6 +10,7 @@ use Tipoff\Scheduling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
+use Illuminate\Database\Eloquent\Model;
 
 class Game extends BaseModel
 {
