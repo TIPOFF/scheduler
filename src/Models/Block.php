@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Tipoff\Bookings\Model\Slot;
 
 class Block extends BaseModel
 {
@@ -39,10 +39,8 @@ class Block extends BaseModel
 
     public function updateSlot()
     {
-        /** @var Model $slotModel */
-        $slotModel = app('slot');
-
-        $slot = $slotModel::find($this->slot_id);
+        /** @var Slot $slot */
+        $slot = Slot::find($this->slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
 
