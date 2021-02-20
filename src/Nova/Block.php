@@ -26,9 +26,9 @@ class Block extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\Bookings\Filters\FutureBlocks::class,
-        \Tipoff\Bookings\Filters\SlotRoomLocation::class,
-        \Tipoff\Bookings\Filters\SlotRoom::class,
+        \Tipoff\Scheduling\Filters\FutureBlocks::class,
+        \Tipoff\Scheduling\Filters\SlotRoomLocation::class,
+        \Tipoff\Scheduling\Filters\SlotRoom::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
