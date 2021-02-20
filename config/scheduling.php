@@ -10,7 +10,7 @@ return [
 
     'collection_class' => [
 
-        'slot' => 'SlotsCollection'
+        'slot' => 'SlotsCollection' 
 
     ]
 
