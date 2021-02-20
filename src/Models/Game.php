@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tipoff\Scheduling\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Scheduling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
+use Tipoff\Bookings\Model\Slot;
 
 class Game extends BaseModel
 {
@@ -36,14 +36,12 @@ class Game extends BaseModel
         parent::boot();
 
         static::creating(function ($game) {
-            /** @var Model $slotModel */
-            $slotModel = app('slot');
-
             do {
                 $token = Str::of(Carbon::parse($game->slot->start_at)->setTimeZone($game->room->location->php_tz)->format('ymdB'))->substr(1, 7).Str::upper(Str::random(3));
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
-            $slot = $slotModel::findOrFail($game->slot_id);
+            /** @var Slot $slot */
+            $slot = Slot::findOrFail($game->slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
