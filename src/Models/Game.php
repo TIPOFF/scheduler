@@ -6,11 +6,11 @@ namespace Tipoff\Scheduling\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Tipoff\Bookings\Model\Slot;
 use Tipoff\Scheduling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
-use Tipoff\Bookings\Model\Slot;
 
 class Game extends BaseModel
 {
