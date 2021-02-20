@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Block extends BaseModel
 {

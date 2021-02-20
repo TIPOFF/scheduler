@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tipoff\Scheduling\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Tipoff\Scheduling\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
-use Illuminate\Database\Eloquent\Model;
 
 class Game extends BaseModel
 {
