@@ -38,8 +38,10 @@ class Block extends BaseModel
 
     public function updateSlot()
     {
-        /** @var Slot $slot */
-        $slot = Slot::find($this->slot_id);
+        /** @var Model $slotModel */
+        $slotModel = app('slot');
+
+        $slot = $slotModel::find($this->slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
 

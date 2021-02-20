@@ -32,6 +32,9 @@ class Game extends BaseModel
 
     protected static function boot()
     {
+        /** @var Model $slotModel */
+        $slotModel = app('slot');
+
         parent::boot();
 
         static::creating(function ($game) {
@@ -40,7 +43,7 @@ class Game extends BaseModel
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
             /** @var Slot $slot */
-            $slot = Slot::findOrFail($game->slot_id);
+            $slot = $slotModel::findOrFail($game->slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
