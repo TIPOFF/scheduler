@@ -32,17 +32,16 @@ class Game extends BaseModel
 
     protected static function boot()
     {
-        /** @var Model $slotModel */
-        $slotModel = app('slot');
-
         parent::boot();
 
         static::creating(function ($game) {
+            /** @var Model $slotModel */
+            $slotModel = app('slot');
+
             do {
                 $token = Str::of(Carbon::parse($game->slot->start_at)->setTimeZone($game->room->location->php_tz)->format('ymdB'))->substr(1, 7).Str::upper(Str::random(3));
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
-            /** @var Slot $slot */
             $slot = $slotModel::findOrFail($game->slot_id);
 
             $game->game_number = $token;
