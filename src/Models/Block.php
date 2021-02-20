@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduling\Models;
 
+use Tipoff\Bookings\Model\Slot;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
-use Tipoff\Bookings\Model\Slot;
 
 class Block extends BaseModel
 {
