@@ -6,7 +6,7 @@ namespace Tipoff\Scheduling\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Scheduling\Models\Game;
-use Tipoff\Scheduling\Models\Slot;
+use Tipoff\Bookings\Models\Slot;
 
 class GameFactory extends Factory
 {
