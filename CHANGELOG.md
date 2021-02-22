@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `scheduling` will be documented in this file.
+All notable changes to `scheduler` will be documented in this file.
 
 ## 1.0.0 - 2021-02-10
 

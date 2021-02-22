@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova\Filters;
+namespace Tipoff\Scheduler\Nova\Filters;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

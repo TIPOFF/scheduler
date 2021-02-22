@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Models;
+namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;

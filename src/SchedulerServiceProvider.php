@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling;
+namespace Tipoff\Scheduler;
 
-use Tipoff\Scheduling\Models\Block;
-use Tipoff\Scheduling\Models\Game;
-use Tipoff\Scheduling\Models\RecurringSchedule;
-use Tipoff\Scheduling\Models\ScheduleEraser;
-use Tipoff\Scheduling\Policies\BlockPolicy;
-use Tipoff\Scheduling\Policies\GamePolicy;
-use Tipoff\Scheduling\Policies\RecurringSchedulePolicy;
-use Tipoff\Scheduling\Policies\ScheduleEraserPolicy;
+use Tipoff\Scheduler\Models\Block;
+use Tipoff\Scheduler\Models\Game;
+use Tipoff\Scheduler\Models\RecurringSchedule;
+use Tipoff\Scheduler\Models\ScheduleEraser;
+use Tipoff\Scheduler\Policies\BlockPolicy;
+use Tipoff\Scheduler\Policies\GamePolicy;
+use Tipoff\Scheduler\Policies\RecurringSchedulePolicy;
+use Tipoff\Scheduler\Policies\ScheduleEraserPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
-class SchedulingServiceProvider extends TipoffServiceProvider
+class SchedulerServiceProvider extends TipoffServiceProvider
 {
     public function configureTipoffPackage(TipoffPackage $package): void
     {
@@ -26,7 +26,7 @@ class SchedulingServiceProvider extends TipoffServiceProvider
                 RecurringSchedule::class => RecurringSchedulePolicy::class,
                 ScheduleEraser::class => ScheduleEraserPolicy::class,
             ])
-            ->name('scheduling')
+            ->name('scheduler')
             ->hasConfigFile();
     }
 }

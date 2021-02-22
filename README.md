@@ -1,8 +1,8 @@
-# Laravel Package for Escape Room Scheduling
+# Laravel Package for Escape Room Scheduler
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/tipoff/scheduling.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduling)
-![Tests](https://github.com/tipoff/scheduling/workflows/Tests/badge.svg)
-[![Total Downloads](https://img.shields.io/packagist/dt/tipoff/scheduling.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduling)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tipoff/scheduler.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduler)
+![Tests](https://github.com/tipoff/scheduler/workflows/Tests/badge.svg)
+[![Total Downloads](https://img.shields.io/packagist/dt/tipoff/scheduler.svg?style=flat-square)](https://packagist.org/packages/tipoff/scheduler)
 
 
 This is where your description should go.
@@ -12,20 +12,20 @@ This is where your description should go.
 You can install the package via composer:
 
 ```bash
-composer require tipoff/scheduling
+composer require tipoff/scheduler
 ```
 
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --provider="Tipoff\Scheduling\SchedulingServiceProvider" --tag="scheduling-migrations"
+php artisan vendor:publish --provider="Tipoff\Scheduler\SchedulerServiceProvider" --tag="scheduler-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="Tipoff\Scheduling\SchedulingServiceProvider" --tag="scheduling-config"
+php artisan vendor:publish --provider="Tipoff\Scheduler\SchedulerServiceProvider" --tag="scheduler-config"
 ```
 
 This is the contents of the published config file:

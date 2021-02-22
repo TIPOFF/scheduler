@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Database\Factories;
+namespace Tipoff\Scheduler\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Tipoff\Scheduling\Models\Game;
+use Tipoff\Scheduler\Models\Game;
 use Tipoff\Bookings\Models\Slot;
 
 class GameFactory extends Factory

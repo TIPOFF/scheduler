@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova;
+namespace Tipoff\Scheduler\Nova;
 
 use Illuminate\Http\Request;
 use Laraning\NovaTimeField\TimeField;
@@ -18,7 +18,7 @@ use Tipoff\Support\Nova\BaseResource;
 
 class RecurringSchedule extends BaseResource
 {
-    public static $model = \Tipoff\Scheduling\Models\RecurringSchedule::class;
+    public static $model = \Tipoff\Scheduler\Models\RecurringSchedule::class;
 
     public static $title = 'id';
 
@@ -52,7 +52,7 @@ class RecurringSchedule extends BaseResource
         ));
     }
 
-    public static $group = 'Operations Scheduling';
+    public static $group = 'Operations Scheduler';
 
     public static $perPageViaRelationship = 30;
 

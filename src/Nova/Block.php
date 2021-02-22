@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova;
+namespace Tipoff\Scheduler\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -18,7 +18,7 @@ use Tipoff\Support\Nova\BaseResource;
 
 class Block extends BaseResource
 {
-    public static $model = \Tipoff\Scheduling\Models\Block::class;
+    public static $model = \Tipoff\Scheduler\Models\Block::class;
 
     public static $title = 'id';
 
@@ -28,9 +28,9 @@ class Block extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\Scheduling\Filters\FutureBlocks::class,
-        \Tipoff\Scheduling\Filters\SlotRoomLocation::class,
-        \Tipoff\Scheduling\Filters\SlotRoom::class,
+        \Tipoff\Scheduler\Filters\FutureBlocks::class,
+        \Tipoff\Scheduler\Filters\SlotRoomLocation::class,
+        \Tipoff\Scheduler\Filters\SlotRoom::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
@@ -57,7 +57,7 @@ class Block extends BaseResource
             ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
     }
 
-    public static $group = 'Operations Scheduling';
+    public static $group = 'Operations Scheduler';
 
     public function fieldsForIndex(NovaRequest $request)
     {
@@ -80,7 +80,7 @@ class Block extends BaseResource
                 'consolidation' => 'Consolidation',
                 'closed' => 'Closed',
                 'repairs' => 'Waiting on Repairs or Maintenance',
-                'conflict' => 'Scheduling Conflict',
+                'conflict' => 'Scheduler Conflict',
                 'training' => 'Staff training or meeting',
                 'resova' => 'Booked in Resova',
                 'other' => 'Other reason',

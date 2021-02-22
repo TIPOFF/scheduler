@@ -1,11 +1,11 @@
 {
-    "name": "tipoff/scheduling",
-    "description": "Laravel Package for Escape Room Scheduling",
+    "name": "tipoff/scheduler",
+    "description": "Laravel Package for Escape Room Scheduler",
     "keywords": [
         "tipoff",
-        "scheduling"
+        "scheduler"
     ],
-    "homepage": "https://github.com/tipoff/scheduling",
+    "homepage": "https://github.com/tipoff/scheduler",
     "license": "MIT",
     "authors": [
         {
@@ -28,13 +28,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Tipoff\\Scheduling\\": "src",
-            "Tipoff\\Scheduling\\Database\\Factories\\": "database/factories"
+            "Tipoff\\Scheduler\\": "src",
+            "Tipoff\\Scheduler\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tipoff\\Scheduling\\Tests\\": "tests"
+            "Tipoff\\Scheduler\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -48,7 +48,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Tipoff\\Scheduling\\SchedulingServiceProvider"
+                "Tipoff\\Scheduler\\SchedulerServiceProvider"
             ]
         }
     },

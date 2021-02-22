@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Models;
+namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tipoff\Bookings\Model\Slot;
-use Tipoff\Scheduling\Filters\GameFilters;
+use Tipoff\Scheduler\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;

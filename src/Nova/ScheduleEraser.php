@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova;
+namespace Tipoff\Scheduler\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -15,7 +15,7 @@ use Tipoff\Support\Nova\BaseResource;
 
 class ScheduleEraser extends BaseResource
 {
-    public static $model = \Tipoff\Scheduling\Models\ScheduleEraser::class;
+    public static $model = \Tipoff\Scheduler\Models\ScheduleEraser::class;
 
     public static $title = 'id';
 
@@ -48,7 +48,7 @@ class ScheduleEraser extends BaseResource
             ->leftJoin('rooms as room', 'room.id', '=', 'schedule_erasers.room_id');
     }
 
-    public static $group = 'Operations Scheduling';
+    public static $group = 'Operations Scheduler';
 
     public function fieldsForIndex(NovaRequest $request)
     {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Tests\Unit\Models;
+namespace Tipoff\Scheduler\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Scheduling\Models\Block;
-use Tipoff\Scheduling\Tests\TestCase;
+use Tipoff\Scheduler\Models\Block;
+use Tipoff\Scheduler\Tests\TestCase;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
 class BlockPolicyTest extends TestCase

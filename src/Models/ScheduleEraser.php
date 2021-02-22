@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Models;
+namespace Tipoff\Scheduler\Models;
 
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;

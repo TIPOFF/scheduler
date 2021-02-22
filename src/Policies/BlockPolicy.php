@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Policies;
+namespace Tipoff\Scheduler\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Tipoff\Scheduling\Models\Block;
+use Tipoff\Scheduler\Models\Block;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
 class BlockPolicy

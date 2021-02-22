@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Database\Factories;
+namespace Tipoff\Scheduler\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Tipoff\Scheduling\Models\Block;
+use Tipoff\Scheduler\Models\Block;
 
 class BlockFactory extends Factory
 {

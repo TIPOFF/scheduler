@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova\Filters;
+namespace Tipoff\Scheduler\Nova\Filters;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;

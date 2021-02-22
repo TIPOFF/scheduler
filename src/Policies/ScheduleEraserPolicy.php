@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Policies;
+namespace Tipoff\Scheduler\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Tipoff\Scheduling\Models\ScheduleEraser;
+use Tipoff\Scheduler\Models\ScheduleEraser;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
 class ScheduleEraserPolicy

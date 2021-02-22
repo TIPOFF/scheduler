@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Scheduling\Nova;
+namespace Tipoff\Scheduler\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -19,7 +19,7 @@ use Tipoff\Support\Nova\BaseResource;
 
 class Game extends BaseResource
 {
-    public static $model = \Tipoff\Scheduling\Models\Game::class;
+    public static $model = \Tipoff\Scheduler\Models\Game::class;
 
     public static $title = 'id';
 
