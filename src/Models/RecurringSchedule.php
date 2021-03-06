@@ -162,6 +162,7 @@ class RecurringSchedule extends BaseModel
     /**
      * Scope a query to rows visible by user.
      */
+
     /**
      * @param Builder $query
      * @param UserInterface $user
