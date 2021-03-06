@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -80,7 +81,7 @@ class ScheduleEraser extends BaseModel
      * @param $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisibleBy($query, $user)
+    public function scopeVisibleBy($query, $user) : Builder
     {
         return $query;
     }
