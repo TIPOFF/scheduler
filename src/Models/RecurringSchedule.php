@@ -6,8 +6,10 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tipoff\Support\Contracts\Models\UserInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -40,11 +42,11 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            
+
             /** @var Model $roomModel */
             $roomModel = app('room');
             $room = $roomModel::findOrFail($schedule->room_id);
-            
+
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
@@ -57,9 +59,9 @@ class RecurringSchedule extends BaseModel
     /**
      * Scope a query to apply filters.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      * @param $filters array
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function scopeFilter($query, $filters)
     {
@@ -159,12 +161,13 @@ class RecurringSchedule extends BaseModel
 
     /**
      * Scope a query to rows visible by user.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param $user
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisibleBy($query, $user)
+    /**
+     * @param Builder $query
+     * @param UserInterface $user
+     * @return Builder
+     */
+    public function scopeVisibleBy($query, $user) : Builder
     {
         return $query;
     }
