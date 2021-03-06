@@ -21,7 +21,7 @@
         "tipoff/escape-room": "^1.1",
         "tipoff/locations": "^2.2.1",
         "tipoff/support": "^1.5.7",
-        "tipoff/bookings": "^1.1.0"
+        "tipoff/bookings": "^2.0.0"
     },
     "require-dev": {
         "tipoff/test-support": "^1.2.0"
