@@ -7,6 +7,8 @@ namespace Tipoff\Scheduler\Models;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Tipoff\Support\Contracts\Models\UserInterface;
 
 class ScheduleEraser extends BaseModel
 {
@@ -77,10 +79,10 @@ class ScheduleEraser extends BaseModel
      * Scope a query to rows visible by user.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param $user
+     * @param \Tipoff\Support\Contracts\Models\UserInterface $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisibleBy($query, $user)
+    public function scopeVisibleBy(Builder $query, UserInterface $user) : Builder
     {
         return $query;
     }
