@@ -6,14 +6,14 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tipoff\Support\Contracts\Models\UserInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
-use Tipoff\Support\Contracts\Models\UserInterface;
-use Illuminate\Database\Eloquent\Builder;
 
 class RecurringSchedule extends BaseModel
 {
