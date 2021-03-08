@@ -8,10 +8,12 @@ use Tipoff\Scheduler\Models\Block;
 use Tipoff\Scheduler\Models\Game;
 use Tipoff\Scheduler\Models\RecurringSchedule;
 use Tipoff\Scheduler\Models\ScheduleEraser;
+use Tipoff\Scheduler\Models\Slot;
 use Tipoff\Scheduler\Policies\BlockPolicy;
 use Tipoff\Scheduler\Policies\GamePolicy;
 use Tipoff\Scheduler\Policies\RecurringSchedulePolicy;
 use Tipoff\Scheduler\Policies\ScheduleEraserPolicy;
+use Tipoff\Scheduler\Policies\SlotPolicy;
 use Tipoff\Support\TipoffPackage;
 use Tipoff\Support\TipoffServiceProvider;
 
@@ -25,6 +27,7 @@ class SchedulerServiceProvider extends TipoffServiceProvider
                 Game::class => GamePolicy::class,
                 RecurringSchedule::class => RecurringSchedulePolicy::class,
                 ScheduleEraser::class => ScheduleEraserPolicy::class,
+                Slot::class => SlotPolicy::class,
             ])
             ->name('scheduler')
             ->hasConfigFile();
