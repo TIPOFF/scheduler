@@ -11,6 +11,7 @@ use Tipoff\Scheduler\SchedulerServiceProvider;
 use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
+use Tipoff\Addresses\AddressesServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -23,6 +24,7 @@ class TestCase extends BaseTestCase
             SchedulerServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
+            AddressesServiceProvider::class,
         ];
     }
 }
