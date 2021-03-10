@@ -9,16 +9,16 @@ class AddSchedulerPermissions extends BasePermissionsMigration
     public function up()
     {
         $permissions = [
-             'view blocks',
-             'create blocks',
-             'update blocks',
-             'delete blocks',
-             'view games',
-             'update games',
-             'view schedules',
-             'create schedules',
-             'update schedules',
-             'delete schedules',
+             'view blocks' => ['Owner', 'Staff'],
+             'create blocks' => ['Owner'],
+             'update blocks' => ['Owner'],
+             'delete blocks' => [],
+             'view games' => ['Owner', 'Staff'],
+             'update games' => ['Owner'],
+             'view schedules' => ['Owner', 'Staff'],
+             'create schedules' => ['Owner'],
+             'update schedules' => ['Owner'],
+             'delete schedules' => [],
         ];
         $this->createPermissions($permissions);
     }
