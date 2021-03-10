@@ -6,6 +6,7 @@ namespace Tipoff\Scheduler\Tests;
 
 use Laravel\Nova\NovaCoreServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
+use Tipoff\Authorization\AuthorizationServiceProvider;
 use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
@@ -19,12 +20,13 @@ class TestCase extends BaseTestCase
     {
         return [
             SupportServiceProvider::class,
+            AddressesServiceProvider::class,
+            AuthorizationServiceProvider::class,
             LocationsServiceProvider::class,
             EscapeRoomServiceProvider::class,
-            SchedulerServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
-            AddressesServiceProvider::class,
+            SchedulerServiceProvider::class,
         ];
     }
 }
