@@ -6,7 +6,7 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Tipoff\Bookings\Model\Slot;
+use Tipoff\Scheduler\Model\Slot;
 use Tipoff\Scheduler\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
