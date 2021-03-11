@@ -7,7 +7,6 @@ namespace Tipoff\Scheduler\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tipoff\Scheduler\Filters\GameFilters;
-use Tipoff\Scheduler\Models\Slot;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
