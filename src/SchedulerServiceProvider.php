@@ -29,6 +29,13 @@ class SchedulerServiceProvider extends TipoffServiceProvider
                 ScheduleEraser::class => ScheduleEraserPolicy::class,
                 Slot::class => SlotPolicy::class,
             ])
+            ->hasNovaResources([
+                \Tipoff\Scheduler\Nova\Block::class,
+                \Tipoff\Scheduler\Nova\Game::class,
+                \Tipoff\Scheduler\Nova\RecurringSchedule::class,
+                \Tipoff\Scheduler\Nova\ScheduleEraser::class,
+                \Tipoff\Scheduler\Nova\Slot::class,
+            ])
             ->name('scheduler')
             ->hasConfigFile();
     }
