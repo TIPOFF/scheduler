@@ -54,6 +54,7 @@ class SlotFactory extends Factory
 
         return [
             'room_id'           => $room,
+            'slot_number'       => $this->faker->randomNumber,
             'schedule_type'     => $type,
             'schedule_id'       => $schedule->id,
             'rate_id'           => $rate,
