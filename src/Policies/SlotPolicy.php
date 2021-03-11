@@ -34,7 +34,7 @@ class SlotPolicy
 
     public function delete(UserInterface $user, Slot $slot): bool
     {
-        return false;
+        return $user->hasPermissionTo('delete slots') ? true : false;
     }
 
     public function restore(UserInterface $user, Slot $slot): bool
