@@ -13,6 +13,8 @@ use Tipoff\Scheduler\SchedulerServiceProvider;
 use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
+use Tipoff\Bookings\BookingsServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -27,6 +29,8 @@ class TestCase extends BaseTestCase
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
             SchedulerServiceProvider::class,
+            BookingsServiceProvider::class,
+            PermissionServiceProvider::class,
         ];
     }
 }
