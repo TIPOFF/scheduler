@@ -43,7 +43,6 @@ We include the following models:
 
 - Block
 - Game
-- Hold
 - Recurring Schedule
 - Schedule Eraser
 - Slot

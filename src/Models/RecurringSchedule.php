@@ -59,9 +59,9 @@ class RecurringSchedule extends BaseModel
     /**
      * Scope a query to apply filters.
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param $filters array
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter($query, $filters)
     {
@@ -161,14 +161,12 @@ class RecurringSchedule extends BaseModel
 
     /**
      * Scope a query to rows visible by user.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Tipoff\Support\Contracts\Models\UserInterface $user
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-
-    /**
-     * @param Builder $query
-     * @param UserInterface $user
-     * @return Builder
-     */
-    public function scopeVisibleBy($query, $user) : Builder
+    public function scopeVisibleBy(Builder $query, UserInterface $user) : Builder
     {
         return $query;
     }
