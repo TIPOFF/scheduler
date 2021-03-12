@@ -17,11 +17,11 @@
     "require": {
         "php": "^7.4|^8.0",
         "laraning/nova-time-field": "^1.2",
-        "tipoff/authorization": "^2.5.0",
+        "tipoff/authorization": "^2.5.1",
         "tipoff/escape-room": "^2.1.1",
-        "tipoff/locations": "^2.5.0",
-        "tipoff/support": "^1.5.12",
-        "tipoff/bookings": "^2.0.0"
+        "tipoff/locations": "^2.5.1",
+        "tipoff/support": "^1.6.0",
+        "tipoff/bookings": "^2.1.0"
     },
     "require-dev": {
         "tipoff/test-support": "^1.2.0"
