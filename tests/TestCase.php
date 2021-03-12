@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Tests;
 
+use Laravel\Nova\NovaCoreServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
+use Tipoff\Addresses\AddressesServiceProvider;
+use Tipoff\Authorization\AuthorizationServiceProvider;
+use Tipoff\Bookings\BookingsServiceProvider;
 use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
+use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
 
@@ -16,9 +22,15 @@ class TestCase extends BaseTestCase
     {
         return [
             SupportServiceProvider::class,
+            AddressesServiceProvider::class,
+            AuthorizationServiceProvider::class,
             LocationsServiceProvider::class,
             EscapeRoomServiceProvider::class,
+            NovaCoreServiceProvider::class,
+            NovaPackageServiceProvider::class,
             SchedulerServiceProvider::class,
+            BookingsServiceProvider::class,
+            PermissionServiceProvider::class,
         ];
     }
 }
