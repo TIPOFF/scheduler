@@ -59,9 +59,9 @@ class RecurringSchedule extends BaseModel
     /**
      * Scope a query to apply filters.
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param $filters array
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter($query, $filters)
     {
