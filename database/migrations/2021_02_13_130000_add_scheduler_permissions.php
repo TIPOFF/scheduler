@@ -19,6 +19,10 @@ class AddSchedulerPermissions extends BasePermissionsMigration
              'create schedules' => ['Owner'],
              'update schedules' => ['Owner'],
              'delete schedules' => [],
+             'view slots' => ['Owner', 'Staff'],
+             'create slots' => ['Owner', 'Staff'],
+             'update slots' => ['Owner', 'Staff'],
+             'delete slots' => [],
         ];
         $this->createPermissions($permissions);
     }
