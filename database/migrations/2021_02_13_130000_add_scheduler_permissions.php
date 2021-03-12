@@ -22,7 +22,6 @@ class AddSchedulerPermissions extends BasePermissionsMigration
              'view slots',
              'create slots',
              'update slots',
-             'delete slots',
         ];
         $this->createPermissions($permissions);
     }
