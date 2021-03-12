@@ -42,11 +42,11 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            
+
             /** @var Model $roomModel */
             $roomModel = app('room');
             $room = $roomModel::findOrFail($schedule->room_id);
-            
+
             if (empty($schedule->rate_id)) {
                 $schedule->rate_id = $room->rate_id;
             }
