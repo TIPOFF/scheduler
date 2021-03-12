@@ -105,6 +105,11 @@ class Game extends BaseModel
         return $this->morphMany(app('note'), 'noteable');
     }
 
+    public function booking()
+    {
+        return $this->morphMany(app('booking'), 'experience');
+    }
+
     public function scopeFilter($query, array $filters = [])
     {
         return (new GameFilters($filters))->apply($query);
