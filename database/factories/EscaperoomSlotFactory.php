@@ -6,16 +6,16 @@ namespace Tipoff\Scheduler\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
-use Tipoff\Scheduler\Models\Slot;
+use Tipoff\Scheduler\Models\EscaperoomSlot;
 
-class SlotFactory extends Factory
+class EscaperoomSlotFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Slot::class;
+    protected $model = EscaperoomSlot::class;
 
     /**
      * Define the model's default state.

@@ -28,7 +28,7 @@ class EscaperoomSlot extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        //\Tipoff\Scheduler\Filters\FutureSlots::class, //TODO where is it?
+        \Tipoff\Scheduler\Filters\FutureEscaperoomSlots::class,
         \Tipoff\EscapeRoom\Filters\RoomLocation::class,
         \Tipoff\EscapeRoom\Filters\Room::class,
     ];
@@ -114,7 +114,7 @@ class EscaperoomSlot extends BaseResource
     {
         return array_filter([
             ID::make(),
-            Text::make('Slot Number')->exceptOnForms(),
+            Text::make('EscaperoomSlot Number')->exceptOnForms(),
             DateTime::make('Created At')->exceptOnForms(),
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),

@@ -4,7 +4,7 @@ return [
 
     'collection_class' => [
 
-        'slot' => 'SlotsCollection' 
+        'slot' => 'EscaperoomSlotsCollection' 
 
     ],    
     'service_class' => [

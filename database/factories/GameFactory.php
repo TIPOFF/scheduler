@@ -6,7 +6,7 @@ namespace Tipoff\Scheduler\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Scheduler\Models\Game;
-use Tipoff\Scheduler\Models\Slot;
+use Tipoff\Scheduler\Models\EscaperoomSlot;
 
 class GameFactory extends Factory
 {
@@ -36,7 +36,7 @@ class GameFactory extends Factory
         }
 
         return [
-            'slot_id'               => Slot::factory()->create(['start_at' => $startingDate]),
+            'escaperoom_slot_id'               => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
             'time'                  => $time,
             'clues'                 => $clues,
             'supervision_id'        => randomOrCreate(app('supervision')),

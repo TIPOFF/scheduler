@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
 
-class SlotDayFilter extends DateFilter
+class EscaperoomSlotDayFilter extends DateFilter
 {
     /**
      * The displayable name of the filter.
@@ -28,7 +28,7 @@ class SlotDayFilter extends DateFilter
     public function apply(Request $request, $query, $value)
     {
         return $query
-            ->join('slots', 'slots.id', 'slot_id')
+            ->join('slots', 'slots.id', 'escaperoom_slot_id')
             ->where('slots.date', Carbon::parse($value));
     }
 }

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\BooleanFilter;
 
-class FutureSlots extends BooleanFilter
+class FutureEscaperoomSlots extends BooleanFilter
 {
     /**
      * Apply the filter to the given query.

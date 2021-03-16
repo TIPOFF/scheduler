@@ -49,7 +49,7 @@ class EscaperoomSlot extends BaseModel
 
             $slot
                 ->generateDates()
-                ->generateSlotNumber()
+                ->generateEscaperoomSlotNumber()
                 ->updateParticipants();
         });
     }
@@ -86,7 +86,7 @@ class EscaperoomSlot extends BaseModel
         return $this;
     }
 
-    public function generateSlotNumber()
+    public function generateEscaperoomSlotNumber()
     {
         if ($this->date instanceof \Illuminate\Support\Carbon) {
             $slotDate = $this->date->toDateString();
@@ -189,7 +189,7 @@ class EscaperoomSlot extends BaseModel
     {
         Session::put('guest:hold', $slotData);
 
-        self::resolveSlot($slotData['slot_number'])
+        self::resolveEscaperoomSlot($slotData['slot_number'])
             ->setHold((int)Session::getId());
     }
 
@@ -392,14 +392,14 @@ class EscaperoomSlot extends BaseModel
      * Find existing or virtual slot.
      *
      * @param string $slotNumber
-     * @return Slot|null
+     * @return EscaperoomSlot|null
      */
-    public static function resolveSlot($slotNumber)
+    public static function resolveEscaperoomSlot($slotNumber)
     {
         $slot = self::where('slot_number', $slotNumber)
             ->first();
 
-        // Virtual  Slots
+        // Virtual  EscaperoomSlots
         if (! $slot) {
             /** @var string $slotCollection */
             $slotCollection = config('bookings.collection_class.slot');
@@ -407,8 +407,8 @@ class EscaperoomSlot extends BaseModel
             // TODO - pull in calendar service so it can be used
             if (app()->has(config('bookings.service_class.calendar'))) {
                 $calendarService = app(config('bookings.service_class.calendar'));
-                $date = $calendarService->generateDateFromSlotNumber($slotNumber);
-                $locationId = $calendarService->getLocationIdBySlotNumber($slotNumber);
+                $date = $calendarService->generateDateFromEscaperoomSlotNumber($slotNumber);
+                $locationId = $calendarService->getLocationIdByEscaperoomSlotNumber($slotNumber);
                 $recurringSchedules = $calendarService->getLocationRecurringScheduleForDateRange($locationId, $date, $date);
                 $slots = new $slotCollection; //@TODO phuclh Need to refactor this line later.
                 $slot = $slots
