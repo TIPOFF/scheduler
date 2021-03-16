@@ -24,7 +24,7 @@ class BlockFactory extends Factory
     public function definition()
     {
         return [
-            'slot_id'      => randomOrCreate(app('slot')),
+            'escaperoom_slot_id'      => randomOrCreate(app('slot')),
             'participants' => $this->faker->numberBetween(1, 10),
             'type'         => $this->faker->word,
             'creator_id'   => randomOrCreate(app('user')),

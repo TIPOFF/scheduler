@@ -36,7 +36,7 @@ class GameFactory extends Factory
         }
 
         return [
-            'slot_id'               => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
+            'escaperoom_slot_id'               => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
             'time'                  => $time,
             'clues'                 => $clues,
             'supervision_id'        => randomOrCreate(app('supervision')),

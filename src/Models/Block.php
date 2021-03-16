@@ -20,7 +20,7 @@ class Block extends BaseModel
         parent::boot();
 
         static::creating(function ($block) {
-            if (empty($block->slot_id)) {
+            if (empty($block->escaperoom_slot_id)) {
                 throw new \Exception('A participant block must be for an availability slot.');
             }
             if (empty($block->participants)) {
@@ -39,7 +39,7 @@ class Block extends BaseModel
     public function updateEscaperoomSlot()
     {
         /** @var EscaperoomSlot $slot */
-        $slot = EscaperoomSlot::find($this->slot_id);
+        $slot = EscaperoomSlot::find($this->escaperoom_slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
 
@@ -59,7 +59,7 @@ class Block extends BaseModel
 
     public function room()
     {
-        return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'slot_id', 'room_id');
+        return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'escaperoom_slot_id', 'room_id');
     }
 
     public function notes()

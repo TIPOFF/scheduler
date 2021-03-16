@@ -40,7 +40,7 @@ class Game extends BaseModel
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
             /** @var EscaperoomSlot $slot */
-            $slot = EscaperoomSlot::findOrFail($game->slot_id);
+            $slot = EscaperoomSlot::findOrFail($game->escaperoom_slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
@@ -48,7 +48,7 @@ class Game extends BaseModel
         });
 
         static::saving(function ($game) {
-            if (empty($game->slot_id)) {
+            if (empty($game->escaperoom_slot_id)) {
                 throw new \Exception('A game must have a time slot.');
             }
             $game->room_id = $game->slot->room_id;
