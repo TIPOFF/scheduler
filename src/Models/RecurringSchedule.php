@@ -122,7 +122,7 @@ class RecurringSchedule extends BaseModel
      */
     public function generateSlotsForDate($date)
     {
-        $slot_model = app('slot');
+        $slot_model = app('escaperoom_slot');
 
         $slots = [];
         if ($this->matchDate($date)) {
