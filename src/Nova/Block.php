@@ -63,7 +63,7 @@ class Block extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
-            nova('slot') ? BelongsTo::make('Slot', 'slot', nova('slot'))->sortable() : null,
+            nova('escaperoom_slot') ? BelongsTo::make('Slot', 'escaperoom_slot', nova('escaperoom_slot'))->sortable() : null,
             Number::make('Participants')->sortable(),
             Date::make('Created', 'created_at')->sortable(),
             // May include type here was a custom badge like on Feedback
@@ -73,7 +73,7 @@ class Block extends BaseResource
     public function fields(Request $request)
     {
         return array_filter([
-            nova('slot') ? BelongsTo::make('Slot', 'slot', nova('slot'))->hideWhenUpdating()->searchable() : null,
+            nova('escaperoom_slot') ? BelongsTo::make('Slot', 'escaperoom_slot', nova('escaperoom_slot'))->hideWhenUpdating()->searchable() : null,
             Number::make('Participants')->hideWhenCreating()->min(0)->max(20)->step(1),
             Select::make('Type')->options([
                 'staffing' => 'Staffing Availability or Issue',
