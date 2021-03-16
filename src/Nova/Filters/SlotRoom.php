@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class SlotRoom extends Filter
+class EscaperoomSlotRoom extends Filter
 {
     /**
      * The filter's component.

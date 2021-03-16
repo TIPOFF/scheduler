@@ -29,17 +29,17 @@ class Block extends BaseModel
         });
 
         static::saved(function ($block) {
-            $block->updateSlot();
+            $block->updateEscaperoomSlot();
         });
         static::deleted(function ($block) {
-            $block->updateSlot();
+            $block->updateEscaperoomSlot();
         });
     }
 
-    public function updateSlot()
+    public function updateEscaperoomSlot()
     {
-        /** @var Slot $slot */
-        $slot = Slot::find($this->slot_id);
+        /** @var EscaperoomSlot $slot */
+        $slot = EscaperoomSlot::find($this->slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
 

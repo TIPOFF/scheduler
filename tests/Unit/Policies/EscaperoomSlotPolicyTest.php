@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tipoff\Scheduler\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Scheduler\Models\Slot;
+use Tipoff\Scheduler\Models\EscaperoomSlot;
 use Tipoff\Scheduler\Tests\TestCase;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
-class SlotPolicyTest extends TestCase
+class EscaperoomSlotPolicyTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -17,10 +17,10 @@ class SlotPolicyTest extends TestCase
     public function view_any()
     {
         $user = self::createPermissionedUser('view slots', true);
-        $this->assertTrue($user->can('viewAny', Slot::class));
+        $this->assertTrue($user->can('viewAny', EscaperoomSlot::class));
 
         $user = self::createPermissionedUser('view slots', false);
-        $this->assertFalse($user->can('viewAny', Slot::class));
+        $this->assertFalse($user->can('viewAny', EscaperoomSlot::class));
     }
 
     /**
@@ -29,7 +29,7 @@ class SlotPolicyTest extends TestCase
      */
     public function all_permissions_as_creator(string $permission, UserInterface $user, bool $expected)
     {
-        $slot = Slot::factory()->make([
+        $slot = EscaperoomSlot::factory()->make([
             'creator_id' => $user,
         ]);
 
@@ -56,7 +56,7 @@ class SlotPolicyTest extends TestCase
      */
     public function all_permissions_not_creator(string $permission, UserInterface $user, bool $expected)
     {
-        $slot = Slot::factory()->make();
+        $slot = EscaperoomSlot::factory()->make();
 
         $this->assertEquals($expected, $user->can($permission, $slot));
     }

@@ -16,9 +16,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
 
-class Slot extends BaseResource
+class EscaperoomSlot extends BaseResource
 {
-    public static $model = \Tipoff\Scheduler\Models\Slot::class;
+    public static $model = \Tipoff\Scheduler\Models\EscaperoomSlot::class;
 
     public static $title = 'title';
 
@@ -28,7 +28,7 @@ class Slot extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\Scheduler\Filters\FutureSlots::class,
+        \Tipoff\Scheduler\Filters\FutureEscaperoomSlots::class,
         \Tipoff\EscapeRoom\Filters\RoomLocation::class,
         \Tipoff\EscapeRoom\Filters\Room::class,
     ];
@@ -114,7 +114,7 @@ class Slot extends BaseResource
     {
         return array_filter([
             ID::make(),
-            Text::make('Slot Number')->exceptOnForms(),
+            Text::make('EscaperoomSlot Number')->exceptOnForms(),
             DateTime::make('Created At')->exceptOnForms(),
             nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
             DateTime::make('Updated At')->exceptOnForms(),

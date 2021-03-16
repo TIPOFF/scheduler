@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tipoff\Scheduler\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Tipoff\Scheduler\Models\Slot;
+use Tipoff\Scheduler\Models\EscaperoomSlot;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
-class SlotPolicy
+class EscaperoomSlotPolicy
 {
     use HandlesAuthorization;
 
@@ -17,7 +17,7 @@ class SlotPolicy
         return $user->hasPermissionTo('view slots') ? true : false;
     }
 
-    public function view(UserInterface $user, Slot $slot): bool
+    public function view(UserInterface $user, EscaperoomSlot $slot): bool
     {
         return $user->hasPermissionTo('view slots') ? true : false;
     }
@@ -27,22 +27,22 @@ class SlotPolicy
         return $user->hasPermissionTo('create slots') ? true : false;
     }
 
-    public function update(UserInterface $user, Slot $slot): bool
+    public function update(UserInterface $user, EscaperoomSlot $slot): bool
     {
         return $user->hasPermissionTo('update slots') ? true : false;
     }
 
-    public function delete(UserInterface $user, Slot $slot): bool
+    public function delete(UserInterface $user, EscaperoomSlot $slot): bool
     {
         return $user->hasPermissionTo('delete slots') ? true : false;
     }
 
-    public function restore(UserInterface $user, Slot $slot): bool
+    public function restore(UserInterface $user, EscaperoomSlot $slot): bool
     {
         return false;
     }
 
-    public function forceDelete(UserInterface $user, Slot $slot): bool
+    public function forceDelete(UserInterface $user, EscaperoomSlot $slot): bool
     {
         return false;
     }

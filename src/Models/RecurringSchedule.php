@@ -102,13 +102,13 @@ class RecurringSchedule extends BaseModel
      * @return Collection
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function generateSlotsForPeriod($initialDate, $finalDate)
+    public function generateEscaperoomSlotsForPeriod($initialDate, $finalDate)
     {
         $slots = collect([]);
 
         $period = CarbonPeriod::create($initialDate, $finalDate);
         foreach ($period as $date) {
-            $slots = $slots->merge($this->generateSlotsForDate($date));
+            $slots = $slots->merge($this->generateEscaperoomSlotsForDate($date));
         }
 
         return $slots;
@@ -120,7 +120,7 @@ class RecurringSchedule extends BaseModel
      * @return Collection
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function generateSlotsForDate($date)
+    public function generateEscaperoomSlotsForDate($date)
     {
         $slot_model = app('slot');
 
@@ -137,7 +137,7 @@ class RecurringSchedule extends BaseModel
                 'start_at' => $startAt,
             ])
                 ->generateDates()
-                ->generateSlotNumber()
+                ->generateEscaperoomSlotNumber()
                 ->updateParticipants();
         }
 
