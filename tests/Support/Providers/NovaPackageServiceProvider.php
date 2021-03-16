@@ -6,6 +6,7 @@ namespace Tipoff\Scheduler\Tests\Support\Providers;
 
 use Tipoff\Scheduler\Nova\Block;
 use Tipoff\Scheduler\Nova\EscaperoomSlot;
+use Tipoff\Scheduler\Nova\EscaperoomSlot;
 use Tipoff\Scheduler\Nova\Game;
 use Tipoff\Scheduler\Nova\RecurringSchedule;
 use Tipoff\Scheduler\Nova\ScheduleErarser;
