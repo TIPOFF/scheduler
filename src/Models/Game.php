@@ -40,7 +40,7 @@ class Game extends BaseModel
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
             /** @var Slot $slot */
-            $slot = Slot::findOrFail($game->slot_id);
+            $slot = app('escaperoom_slot')::findOrFail($game->slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
@@ -72,7 +72,7 @@ class Game extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(app('slot'));
+        return $this->belongsTo(app('escaperoom_slot'));
     }
 
     public function room()
