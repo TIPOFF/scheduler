@@ -39,7 +39,7 @@ class Block extends BaseModel
     public function updateSlot()
     {
         /** @var Slot $slot */
-        $slot = Slot::find($this->slot_id);
+        $slot = app('escaperoomn_slot')::find($this->slot_id);
 
         $slot->participants_blocked = $slot->blocks->sum('participants');
 
@@ -59,7 +59,7 @@ class Block extends BaseModel
 
     public function room()
     {
-        return $this->hasOneThrough(app('room'), app('slot'), 'id', 'id', 'slot_id', 'room_id');
+        return $this->hasOneThrough(app('room'), app('escaperoom_slot'), 'id', 'id', 'slot_id', 'room_id');
     }
 
     public function notes()
