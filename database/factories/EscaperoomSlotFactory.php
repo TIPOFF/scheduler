@@ -28,7 +28,7 @@ class EscaperoomSlotFactory extends Factory
         $room = randomOrCreate(app('room'));
         // Allows half to default to the room rate and half to ovveride the rate
         if ($this->faker->boolean) {
-            $rate = randomOrCreate(app('rate'));
+            $rate = randomOrCreate(app('escaperoom_rate'));
         } else {
             $rate = null;
         }
@@ -53,14 +53,14 @@ class EscaperoomSlotFactory extends Factory
         $endAt = $startAt->addMinutes(60);
 
         return [
-            'room_id'           => $room,
-            'slot_number'       => $this->faker->randomNumber,
-            'schedule_type'     => $type,
-            'schedule_id'       => $schedule->id,
-            'rate_id'           => $rate,
-            'supervision_id'    => randomOrCreate(app('supervision')),
-            'start_at'          => $startAt,
-            'end_at'            => $endAt,
+            'room_id'            => $room,
+            'slot_number'        => $this->faker->randomNumber,
+            'schedule_type'      => $type,
+            'schedule_id'        => $schedule->id,
+            'escaperoom_rate_id' => $rate,
+            'supervision_id'     => randomOrCreate(app('supervision')),
+            'start_at'           => $startAt,
+            'end_at'             => $endAt,
         ];
     }
 }
