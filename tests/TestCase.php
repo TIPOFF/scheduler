@@ -14,7 +14,9 @@ use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
 use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
 use Tipoff\Support\SupportServiceProvider;
+use Tipoff\Statuses\StatusesServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
+use DrewRoberts\Media\MediaServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -31,6 +33,8 @@ class TestCase extends BaseTestCase
             SchedulerServiceProvider::class,
             BookingsServiceProvider::class,
             PermissionServiceProvider::class,
+            StatusesServiceProvider::class,
+            MediaServiceProvider::class,
         ];
     }
 }
