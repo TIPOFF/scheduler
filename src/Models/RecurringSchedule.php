@@ -47,8 +47,8 @@ class RecurringSchedule extends BaseModel
             $roomModel = app('room');
             $room = $roomModel::findOrFail($schedule->room_id);
 
-            if (empty($schedule->rate_id)) {
-                $schedule->rate_id = $room->rate_id;
+            if (empty($schedule->escaperoom_rate_id)) {
+                $schedule->escaperoom_rate_id = $room->escaperoom_rate_id;
             }
             if (empty($schedule->valid_from)) {
                 $schedule->valid_from = Carbon::today();
