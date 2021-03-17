@@ -9,7 +9,7 @@ use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
 use Tipoff\Authorization\AuthorizationServiceProvider;
 use Tipoff\Bookings\BookingsServiceProvider;
-use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
+use Tipoff\EscapeRoom\EscaperoomServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
 use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
@@ -27,7 +27,7 @@ class TestCase extends BaseTestCase
             AddressesServiceProvider::class,
             AuthorizationServiceProvider::class,
             LocationsServiceProvider::class,
-            EscapeRoomServiceProvider::class,
+            EscaperoomServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaPackageServiceProvider::class,
             SchedulerServiceProvider::class,
