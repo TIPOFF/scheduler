@@ -72,7 +72,7 @@ class RecurringSchedule extends BaseModel
         foreach ($filters as $filterKey => $filterValue) {
             switch ($filterKey) {
                 case 'room_id':
-                case 'rate_id':
+                case 'escaperoom_rate_id':
                 case 'date':
                 case 'valid_from':
                 case 'expires_at':
@@ -133,7 +133,7 @@ class RecurringSchedule extends BaseModel
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
-                'rate_id' => $this->rate_id,
+                'escaperoom_rate_id' => $this->escaperoom_rate_id,
                 'start_at' => $startAt,
             ])
                 ->generateDates()
