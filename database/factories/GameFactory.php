@@ -7,6 +7,7 @@ namespace Tipoff\Scheduler\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Scheduler\Models\Game;
 use Tipoff\Scheduler\Models\EscaperoomSlot;
+use Carbon\Carbon;
 
 class GameFactory extends Factory
 {
@@ -39,8 +40,11 @@ class GameFactory extends Factory
             'escaperoom_slot_id'               => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
             'time'                  => $time,
             'clues'                 => $clues,
+            'date'                  => Carbon::now(),
+            'room_id'               => randomOrCreate(app('room')),
             'supervision_id'        => randomOrCreate(app('supervision')),
             'monitor_id'            => randomOrCreate(app('user')),
+            'receptionist_id'       => randomOrCreate(app('user')),
             'receptionist_id'       => randomOrCreate(app('user')),
             'manager_id'            => randomOrCreate(app('user')),
         ];
