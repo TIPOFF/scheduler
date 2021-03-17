@@ -95,7 +95,9 @@ class Block extends BaseResource
         return array_merge(
             parent::dataFields(),
             $this->creatorDataFields(),
-            $this->updaterDataFields(),
+            [
+                DateTime::make('Updated At')->exceptOnForms(),
+            ],
         );
     }
 }
