@@ -40,8 +40,8 @@ class EscaperoomSlot extends BaseModel
             $roomModel = app('room');
             $room = $roomModel::findOrFail($slot->room_id);
 
-            if (empty($slot->rate_id)) {
-                $slot->rate_id = $room->rate_id;
+            if (empty($slot->escaperoom_rate_id)) {
+                $slot->escaperoom_rate_id = $room->escaperoom_rate_id;
             }
             if (empty($slot->supervision_id)) {
                 $slot->supervision_id = $room->supervision_id;
