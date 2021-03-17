@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
-class SlotRoomLocation extends Filter
+class EscaperoomSlotRoomLocation extends Filter
 {
     /**
      * The filter's component.
@@ -34,7 +34,7 @@ class SlotRoomLocation extends Filter
     public function apply(Request $request, $query, $value)
     {
         return $query
-            ->join('slots', 'slots.id', 'slot_id')
+            ->join('slots', 'slots.id', 'escaperoom_slot_id')
             ->join('rooms', 'rooms.id', 'slots.room_id')
             ->where('rooms.location_id', $value);
     }
