@@ -91,13 +91,12 @@ class Block extends BaseResource
         ]);
     }
 
-    protected function dataFields():array
+    protected function dataFields(): array
     {
-        return array_filter([
-            ID::make(),
-            nova('user') ? BelongsTo::make('Creator', 'creator', nova('user'))->exceptOnForms() : null,
-            DateTime::make('Created At')->exceptOnForms(),
-            DateTime::make('Updated At')->exceptOnForms(),
-        ]);
+        return array_merge(
+            parent::dataFields(),
+            $this->creatorDataFields(),
+            $this->updaterDataFields(),
+        );
     }
 }
