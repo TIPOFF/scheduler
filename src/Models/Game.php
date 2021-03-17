@@ -6,7 +6,6 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Tipoff\Bookings\Model\Slot;
 use Tipoff\Scheduler\Filters\GameFilters;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -40,8 +39,8 @@ class Game extends BaseModel
                 $token = Str::of(Carbon::parse($game->slot->start_at)->setTimeZone($game->room->location->php_tz)->format('ymdB'))->substr(1, 7).Str::upper(Str::random(3));
             } while (self::where('game_number', $token)->first()); // check if the token already exists and if it does, try again
 
-            /** @var Slot $slot */
-            $slot = Slot::findOrFail($game->slot_id);
+            /** @var EscaperoomSlot $slot */
+            $slot = EscaperoomSlot::findOrFail($game->escaperoom_slot_id);
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
@@ -49,7 +48,7 @@ class Game extends BaseModel
         });
 
         static::saving(function ($game) {
-            if (empty($game->slot_id)) {
+            if (empty($game->escaperoom_slot_id)) {
                 throw new \Exception('A game must have a time slot.');
             }
             $game->room_id = $game->slot->room_id;
@@ -73,7 +72,7 @@ class Game extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(app('slot'));
+        return $this->belongsTo(app('escaperoom_slot'), 'escaperoom_slot_id');
     }
 
     public function room()
@@ -104,6 +103,11 @@ class Game extends BaseModel
     public function notes()
     {
         return $this->morphMany(app('note'), 'noteable');
+    }
+
+    public function booking()
+    {
+        return $this->morphMany(app('booking'), 'experience');
     }
 
     public function scopeFilter($query, array $filters = [])

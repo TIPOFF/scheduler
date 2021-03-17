@@ -69,7 +69,7 @@ class Game extends BaseResource
     {
         return array_filter([
             Text::make('Game Number')->exceptOnForms(),
-            BelongsTo::make('Slot')->hideWhenUpdating(),
+            BelongsTo::make('EscaperoomSlot')->hideWhenUpdating(),
             nova('room') ? BelongsTo::make('Room', 'room', nova('room'))->exceptOnForms() : null,
             Date::make('Date')->exceptOnForms(),
             DateTime::make('Initiated At')->hideWhenCreating(),

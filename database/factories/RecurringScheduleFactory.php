@@ -25,7 +25,7 @@ class RecurringScheduleFactory extends Factory
     {
         return [
             'room_id' => randomOrCreate(app('room')),
-            'rate_id' => randomOrCreate(app('rate')),
+            'escaperoom_rate_id' => randomOrCreate(app('escaperoom_rate')),
 
             'day'  => rand(1, 7),
             'time' => rand(0, 24) . ':00:00',

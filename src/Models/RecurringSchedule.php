@@ -6,8 +6,10 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Tipoff\Support\Contracts\Models\UserInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -40,13 +42,13 @@ class RecurringSchedule extends BaseModel
             if (empty($schedule->time)) {
                 throw new \Exception('Schedule must have a time set in the location\'s timezone.');
             }
-            
+
             /** @var Model $roomModel */
             $roomModel = app('room');
             $room = $roomModel::findOrFail($schedule->room_id);
-            
-            if (empty($schedule->rate_id)) {
-                $schedule->rate_id = $room->rate_id;
+
+            if (empty($schedule->escaperoom_rate_id)) {
+                $schedule->escaperoom_rate_id = $room->escaperoom_rate_id;
             }
             if (empty($schedule->valid_from)) {
                 $schedule->valid_from = Carbon::today();
@@ -70,7 +72,7 @@ class RecurringSchedule extends BaseModel
         foreach ($filters as $filterKey => $filterValue) {
             switch ($filterKey) {
                 case 'room_id':
-                case 'rate_id':
+                case 'escaperoom_rate_id':
                 case 'date':
                 case 'valid_from':
                 case 'expires_at':
@@ -100,13 +102,13 @@ class RecurringSchedule extends BaseModel
      * @return Collection
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function generateSlotsForPeriod($initialDate, $finalDate)
+    public function generateEscaperoomSlotsForPeriod($initialDate, $finalDate)
     {
         $slots = collect([]);
 
         $period = CarbonPeriod::create($initialDate, $finalDate);
         foreach ($period as $date) {
-            $slots = $slots->merge($this->generateSlotsForDate($date));
+            $slots = $slots->merge($this->generateEscaperoomSlotsForDate($date));
         }
 
         return $slots;
@@ -118,9 +120,9 @@ class RecurringSchedule extends BaseModel
      * @return Collection
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function generateSlotsForDate($date)
+    public function generateEscaperoomSlotsForDate($date)
     {
-        $slot_model = app('slot');
+        $slot_model = app('escaperoom_slot');
 
         $slots = [];
         if ($this->matchDate($date)) {
@@ -131,11 +133,11 @@ class RecurringSchedule extends BaseModel
                 'room_id' => $this->room_id,
                 'schedule_type' => 'recurring_schedules',
                 'schedule_id' => $this->id,
-                'rate_id' => $this->rate_id,
+                'escaperoom_rate_id' => $this->escaperoom_rate_id,
                 'start_at' => $startAt,
             ])
                 ->generateDates()
-                ->generateSlotNumber()
+                ->generateEscaperoomSlotNumber()
                 ->updateParticipants();
         }
 
@@ -161,10 +163,10 @@ class RecurringSchedule extends BaseModel
      * Scope a query to rows visible by user.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param $user
+     * @param \Tipoff\Support\Contracts\Models\UserInterface $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisibleBy($query, $user)
+    public function scopeVisibleBy(Builder $query, UserInterface $user) : Builder
     {
         return $query;
     }

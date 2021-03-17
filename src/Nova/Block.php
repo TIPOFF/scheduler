@@ -28,8 +28,8 @@ class Block extends BaseResource
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
         \Tipoff\Scheduler\Filters\FutureBlocks::class,
-        \Tipoff\Scheduler\Filters\SlotRoomLocation::class,
-        \Tipoff\Scheduler\Filters\SlotRoom::class,
+        \Tipoff\Scheduler\Filters\EscaperoomSlotRoomLocation::class,
+        \Tipoff\Scheduler\Filters\EscaperoomSlotRoom::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
@@ -44,7 +44,7 @@ class Block extends BaseResource
         ])) {
             return $query
                 ->select('blocks.*')
-                ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.slot_id')
+                ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
                 ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
         }
 
@@ -52,7 +52,7 @@ class Block extends BaseResource
             return $orderlocation
                 ->whereIn('room.location_id', $request->user()->locations->pluck('id'));
         })->select('blocks.*')
-            ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.slot_id')
+            ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
             ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
     }
 
@@ -62,7 +62,7 @@ class Block extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
-            nova('slot') ? BelongsTo::make('Slot', 'slot', nova('slot'))->sortable() : null,
+            nova('escaperoom_slot') ? BelongsTo::make('EscaperoomSlot', 'slot', nova('slot'))->sortable() : null,
             Number::make('Participants')->sortable(),
             Date::make('Created', 'created_at')->sortable(),
             // May include type here was a custom badge like on Feedback
@@ -72,7 +72,8 @@ class Block extends BaseResource
     public function fields(Request $request)
     {
         return array_filter([
-            nova('slot') ? BelongsTo::make('Slot', 'slot', nova('slot'))->hideWhenUpdating()->searchable() : null,
+
+            nova('escaperoom_slot') ? BelongsTo::make('EscaperoomSlot', 'slot', nova('slot'))->hideWhenUpdating()->searchable() : null,
             Number::make('Participants')->hideWhenCreating()->min(0)->max(20)->step(1),
             Select::make('Type')->options([
                 'staffing' => 'Staffing Availability or Issue',
