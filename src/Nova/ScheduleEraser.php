@@ -81,7 +81,6 @@ class ScheduleEraser extends BaseResource
             [
                 DateTime::make('Updated At')->exceptOnForms(),
             ],
-
         );
     }
 }
