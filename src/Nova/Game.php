@@ -91,11 +91,12 @@ class Game extends BaseResource
 
     protected function dataFields(): array
     {
-        return array_filter([
-            ID::make(),
-            DateTime::make('Created At')->exceptOnForms(),
-            nova('user') ? BelongsTo::make('Updated By', 'updater', nova('user'))->exceptOnForms() : null,
-            DateTime::make('Updated At')->exceptOnForms(),
-        ]);
+        return array_merge(
+            parent::dataFields(),
+            $this->updaterDataFields(),
+            [
+                 DateTime::make('Created At')->exceptOnForms(),
+            ],
+        );
     }
 }
