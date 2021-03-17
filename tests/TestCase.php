@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Tests;
 
+use DrewRoberts\Media\MediaServiceProvider;
 use Laravel\Nova\NovaCoreServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
@@ -13,10 +14,9 @@ use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
 use Tipoff\Scheduler\Tests\Support\Providers\NovaPackageServiceProvider;
-use Tipoff\Support\SupportServiceProvider;
 use Tipoff\Statuses\StatusesServiceProvider;
+use Tipoff\Support\SupportServiceProvider;
 use Tipoff\TestSupport\BaseTestCase;
-use DrewRoberts\Media\MediaServiceProvider;
 
 class TestCase extends BaseTestCase
 {
