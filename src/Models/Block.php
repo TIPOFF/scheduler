@@ -54,7 +54,7 @@ class Block extends BaseModel
 
     public function slot()
     {
-        return $this->belongsTo(app('slot'));
+        return $this->belongsTo(app('escaperoom_slot'));
     }
 
     public function room()
