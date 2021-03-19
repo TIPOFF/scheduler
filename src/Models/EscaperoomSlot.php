@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Assert\Assert;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -31,12 +32,10 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         parent::boot();
 
         static::saving(function ($slot) {
-            if (empty($slot->room_id)) {
-                throw new \Exception('An availability slot must be for a room.');
-            }
-            if (empty($slot->start_at)) {
-                throw new \Exception('An availability slot must have a date & time.');
-            }
+            Assert::lazy()
+                ->that($slot->room_id)->notEmpty('An availability slot must be for a room.')
+                ->that($slot->start_at)->notEmpty('An availability slot must have a date & time.')
+                ->verifyNow();
 
             /** @var Model $roomModel */
             $roomModel = app('room');
@@ -95,7 +94,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         } else {
             $slotDate = $this->date;
         }
-        
+
         $slotNumber = str_replace('-', '', substr($slotDate, 2, 8))
             . (string)$this->start_at->format('Hi')
             . '-' . $this->room->location_id
@@ -156,6 +155,16 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     }
 
     /**
+     * Get label.
+     *
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->title;
+    }
+
+    /**
      * Get location time.
      *
      * @return string
@@ -168,11 +177,11 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     /**
      * Create hold.
      *
-     * @param int $userId
+     * @param int $id
      * @param Carbon|null $expiresAt
      * @return self
      */
-    public function setHold($id, $expiresAt = null): self
+    public function setHold($id, ?Carbon $expiresAt): self
     {
         if (empty($expiresAt)) {
             $expiresAt = now()->addSeconds(config('services.slot.hold.lifetime', 600));
@@ -192,7 +201,17 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         Session::put('guest:hold', $slotData);
 
         self::resolveEscaperoomSlot($slotData['slot_number'])
-            ->setHold((int)Session::getId());
+            ->setHold((int)Session::getId(), null);
+    }
+
+    /**
+     * Get timezone.
+     *
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->room->location->php_tz;
     }
 
     /**
@@ -268,6 +287,41 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     public function bookings(): Relation
     {
         return $this->hasMany(app('booking'));
+    }
+
+    public function getTime(): Carbon
+    {
+        return Carbon::now()->setTimeZone($this->getTimezone());
+    }
+
+    /**
+     * Get start at.
+     *
+     * @return Carbon
+     */
+    public function getStartAt(): Carbon
+    {
+        return $this->location_start;
+    }
+
+    /**
+     * Get end at.
+     *
+     * @return Carbon
+     */
+    public function getEndAt(): Carbon
+    {
+        return $this->location_end;
+    }
+
+    /**
+     * Get booking date.
+     *
+     * @return Carbon
+     */
+    public function getDate(): Carbon
+    {
+        return Carbon::parse($this->start_at)->setTimeZone($this->getTimezone());
     }
 
     /**
@@ -391,10 +445,21 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     }
 
     /**
+     * Resolve slot by number.
+     *
+     * @param  string $slotNumber
+     * @return self
+     */
+    public function resolveSlot($slotNumber): self
+    {
+        return $this->resolveEscaperoomSlot($slotNumber);
+    }
+
+    /**
      * Find existing or virtual slot.
      *
      * @param string $slotNumber
-     * @return EscaperoomSlot|null
+     * @return EscaperoomSlot
      */
     public static function resolveEscaperoomSlot($slotNumber)
     {
@@ -421,47 +486,5 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         }
 
         return $slot;
-    }
-
-    public function resolveSlot($slotNumber): self
-    {
-        // @todo: implement resolveSlot
-        return $this;
-    }
-
-    public function getTimezone(): string
-    {
-        // @todo: implement getTimezone
-        return "";
-    }
-
-    public function getTime(): Carbon
-    {
-        // @todo: implement getTime
-        return Carbon::now();
-    }
-
-    public function getLabel(): string
-    {
-        // @todo: implement getLabel
-        return "";
-    }
-
-    public function getDate(): Carbon
-    {
-        // @todo: implement getDate
-        return Carbon::now();
-    }
-
-    public function getStartAt(): Carbon
-    {
-        // @todo: implement getStartAt
-        return Carbon::now();
-    }
-
-    public function getEndAt(): Carbon
-    {
-        // @todo: implement getEndAt
-        return Carbon::now();
     }
 }
