@@ -172,7 +172,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      * @param Carbon|null $expiresAt
      * @return self
      */
-    public function setHold($userId, $expiresAt = null): self
+    public function setHold($id, $expiresAt = null): self
     {
         if (empty($expiresAt)) {
             $expiresAt = now()->addSeconds(config('services.slot.hold.lifetime', 600));
@@ -180,7 +180,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
         Cache::put(
             $this->getHoldCacheKey(),
-            ['user_id' => $userId, 'expires_at' => (string)$expiresAt],
+            ['user_id' => $id, 'expires_at' => (string)$expiresAt],
             $expiresAt
         );
 
