@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tipoff\Scheduler\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Scheduler\Models\Game;
+use Tipoff\Scheduler\Models\EscaperoomGame;
 use Tipoff\Scheduler\Tests\TestCase;
 use Tipoff\Support\Contracts\Models\UserInterface;
 
-class GamePolicyTest extends TestCase
+class EscaperoomGamePolicyTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -17,10 +17,10 @@ class GamePolicyTest extends TestCase
     public function view_any()
     {
         $user = self::createPermissionedUser('view games', true);
-        $this->assertTrue($user->can('viewAny', Game::class));
+        $this->assertTrue($user->can('viewAny', EscaperoomGame::class));
 
         $user = self::createPermissionedUser('view games', false);
-        $this->assertFalse($user->can('viewAny', Game::class));
+        $this->assertFalse($user->can('viewAny', EscaperoomGame::class));
     }
 
     /**
@@ -29,7 +29,7 @@ class GamePolicyTest extends TestCase
      */
     public function all_permissions_as_creator(string $permission, UserInterface $user, bool $expected)
     {
-        $game = Game::factory()->make([
+        $game = EscaperoomGame::factory()->make([
             'creator_id' => $user,
         ]);
 
@@ -56,7 +56,7 @@ class GamePolicyTest extends TestCase
      */
     public function all_permissions_not_creator(string $permission, UserInterface $user, bool $expected)
     {
-        $game = Game::factory()->make();
+        $game = EscaperoomGame::factory()->make();
 
         $this->assertEquals($expected, $user->can($permission, $game));
     }

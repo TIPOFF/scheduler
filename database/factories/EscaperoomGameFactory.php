@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Tipoff\Scheduler\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Tipoff\Scheduler\Models\Game;
+use Tipoff\Scheduler\Models\EscaperoomGame;
 use Tipoff\Scheduler\Models\EscaperoomSlot;
 use Carbon\Carbon;
 
-class GameFactory extends Factory
+class EscaperoomGameFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Game::class;
+    protected $model = EscaperoomGame::class;
 
     /**
      * Define the model's default state.
