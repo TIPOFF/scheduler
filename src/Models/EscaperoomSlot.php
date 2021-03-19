@@ -6,13 +6,15 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
+use Tipoff\Support\Contracts\Booking\BookingSlotInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class EscaperoomSlot extends BaseModel
+class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 {
     use HasPackageFactory;
     use HasUpdater;
@@ -61,7 +63,7 @@ class EscaperoomSlot extends BaseModel
      * @param string $finalTime
      * @return bool
      */
-    public function isActiveAtTimeRange($initialTime, $finalTime)
+    public function isActiveAtTimeRange($initialTime, $finalTime): bool
     {
         $initialTime = Carbon::parse($initialTime, 'UTC');
         $finalTime = Carbon::parse($finalTime, 'UTC');
@@ -126,7 +128,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function hasHold()
+    public function hasHold(): bool
     {
         return Cache::has($this->getHoldCacheKey());
     }
@@ -146,11 +148,21 @@ class EscaperoomSlot extends BaseModel
      *
      * @return self
      */
-    public function releaseHold()
+    public function releaseHold(): self
     {
         Cache::delete($this->getHoldCacheKey());
 
         return $this;
+    }
+
+    /**
+     * Get label.
+     *
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->title;
     }
 
     /**
@@ -166,11 +178,11 @@ class EscaperoomSlot extends BaseModel
     /**
      * Create hold.
      *
-     * @param int $userId
+     * @param int $id
      * @param Carbon|null $expiresAt
      * @return self
      */
-    public function setHold($userId, $expiresAt = null)
+    public function setHold($id, ?Carbon $expiresAt): self
     {
         if (empty($expiresAt)) {
             $expiresAt = now()->addSeconds(config('services.slot.hold.lifetime', 600));
@@ -178,7 +190,7 @@ class EscaperoomSlot extends BaseModel
 
         Cache::put(
             $this->getHoldCacheKey(),
-            ['user_id' => $userId, 'expires_at' => (string)$expiresAt],
+            ['user_id' => $id, 'expires_at' => (string)$expiresAt],
             $expiresAt
         );
 
@@ -190,7 +202,17 @@ class EscaperoomSlot extends BaseModel
         Session::put('guest:hold', $slotData);
 
         self::resolveEscaperoomSlot($slotData['slot_number'])
-            ->setHold((int)Session::getId());
+            ->setHold((int)Session::getId(), null);
+    }
+
+    /**
+     * Get timezone.
+     *
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->room->location->php_tz;
     }
 
     /**
@@ -263,9 +285,44 @@ class EscaperoomSlot extends BaseModel
         return $this->hasMany(app('block'));
     }
 
-    public function bookings()
+    public function bookings(): Relation
     {
         return $this->hasMany(app('booking'));
+    }
+
+    public function getTime(): Carbon
+    {
+        return Carbon::now()->setTimeZone($this->getTimezone());
+    }
+
+    /**
+     * Get start at.
+     *
+     * @return Carbon
+     */
+    public function getStartAt(): Carbon
+    {
+        return $this->location_start;
+    }
+
+    /**
+     * Get end at.
+     *
+     * @return Carbon
+     */
+    public function getEndAt(): Carbon
+    {
+        return $this->location_end;
+    }
+
+    /**
+     * Get booking date.
+     *
+     * @return Carbon
+     */
+    public function getDate(): Carbon
+    {
+        return Carbon::parse($this->start_at)->setTimeZone($this->getTimezone());
     }
 
     /**
@@ -355,7 +412,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function isBookable()
+    public function isBookable(): bool
     {
         if ($this->getCarbonStartAt() < Carbon::now('UTC')->add('20 minutes')) {
             return false;
@@ -373,7 +430,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function isVirtual()
+    public function isVirtual(): bool
     {
         return ! $this->exists;
     }
@@ -389,10 +446,21 @@ class EscaperoomSlot extends BaseModel
     }
 
     /**
+     * Resolve slot by number.
+     *
+     * @param  string $slotNumber
+     * @return self
+     */
+    public function resolveSlot($slotNumber): self
+    {
+        return $this->resolveEscaperoomSlot($slotNumber);
+    }
+
+    /**
      * Find existing or virtual slot.
      *
      * @param string $slotNumber
-     * @return EscaperoomSlot|null
+     * @return EscaperoomSlot
      */
     public static function resolveEscaperoomSlot($slotNumber)
     {
