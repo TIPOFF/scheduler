@@ -6,13 +6,13 @@ namespace Tipoff\Scheduler\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
+use Tipoff\Support\Contracts\Booking\BookingSlotInterface;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
-use Tipoff\Support\Contracts\Booking\BookingSlotInterface;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 {
@@ -450,18 +450,18 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     public function getDate(): Carbon
     {
         // @todo: implement getDate
-        return Carbon::now();     
+        return Carbon::now();
     }
 
     public function getStartAt(): Carbon
     {
         // @todo: implement getStartAt
-        return Carbon::now();    
+        return Carbon::now();
     }
 
     public function getEndAt(): Carbon
     {
         // @todo: implement getEndAt
-        return Carbon::now(); 
+        return Carbon::now();
     }
 }
