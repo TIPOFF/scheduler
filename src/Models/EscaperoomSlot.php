@@ -162,7 +162,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function getLabel(): string
     {
-    	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -212,7 +212,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function getTimezone(): string
     {
-    	return $this->room->location->php_tz;
+        return $this->room->location->php_tz;
     }
 
     /**
@@ -292,7 +292,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
     public function getTime(): Carbon
     {
-    	return Carbon::now()->setTimeZone($this->getTimezone());
+        return Carbon::now()->setTimeZone($this->getTimezone());
     }
 
     /**
@@ -302,7 +302,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function getStartAt(): Carbon
     {
-    	return $this->location_start;
+        return $this->location_start;
     }
 
     /**
@@ -312,7 +312,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function getEndAt(): Carbon
     {
-    	return $this->location_end;
+        return $this->location_end;
     }
 
     /**
@@ -322,7 +322,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function getDate(): Carbon
     {
-    	return Carbon::parse($this->start_at)->setTimeZone($this->getTimezone());
+        return Carbon::parse($this->start_at)->setTimeZone($this->getTimezone());
     }
 
     /**
@@ -453,9 +453,8 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
      */
     public function resolveSlot($slotNumber): self
     {
-    	return $this->resolveEscaperoomSlot($slotNumber);
+        return $this->resolveEscaperoomSlot($slotNumber);
     }
-
 
     /**
      * Find existing or virtual slot.
