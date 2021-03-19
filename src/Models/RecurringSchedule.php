@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Assert\Assert;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,15 +34,11 @@ class RecurringSchedule extends BaseModel
 
 
         static::saving(function ($schedule) {
-            if (empty($schedule->room_id)) {
-                throw new \Exception('Schedule must be assigned to a room.');
-            }
-            if (empty($schedule->day)) {
-                throw new \Exception('Recurring Schedules must have a day of the week.');
-            }
-            if (empty($schedule->time)) {
-                throw new \Exception('Schedule must have a time set in the location\'s timezone.');
-            }
+            Assert::lazy()
+                ->that($schedule->room_id)->notEmpty('Schedule must be assigned to a room.')
+                ->that($schedule->day)->notEmpty('Recurring Schedules must have a day of the week.')
+                ->that($schedule->time)->notEmpty('Schedule must have a time set in the location\'s timezone.')
+                ->verifyNow();
 
             /** @var Model $roomModel */
             $roomModel = app('room');

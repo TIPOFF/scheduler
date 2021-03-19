@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Assert\Assert;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -31,12 +32,10 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         parent::boot();
 
         static::saving(function ($slot) {
-            if (empty($slot->room_id)) {
-                throw new \Exception('An availability slot must be for a room.');
-            }
-            if (empty($slot->start_at)) {
-                throw new \Exception('An availability slot must have a date & time.');
-            }
+            Assert::lazy()
+                ->that($slot->room_id)->notEmpty('An availability slot must be for a room.')
+                ->that($slot->start_at)->notEmpty('An availability slot must have a date & time.')
+                ->verifyNow();
 
             /** @var Model $roomModel */
             $roomModel = app('room');
@@ -95,7 +94,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         } else {
             $slotDate = $this->date;
         }
-        
+
         $slotNumber = str_replace('-', '', substr($slotDate, 2, 8))
             . (string)$this->start_at->format('Hi')
             . '-' . $this->room->location_id
