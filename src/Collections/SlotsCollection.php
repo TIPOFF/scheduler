@@ -187,7 +187,6 @@ class SlotsCollection extends Collection
         });
     }
 
-
     /**
      * Filter slots to bookable ones.
      *
