@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Assert\Assert;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Tipoff\Scheduler\Filters\GameFilters;
@@ -48,9 +49,9 @@ class Game extends BaseModel
         });
 
         static::saving(function ($game) {
-            if (empty($game->escaperoom_slot_id)) {
-                throw new \Exception('A game must have a time slot.');
-            }
+            Assert::lazy()
+                ->that($game->escaperoom_slot_id)->notEmpty('A game must have a time slot.')
+                ->verifyNow();
             $game->room_id = $game->slot->room_id;
             $game->date = $game->slot->date;
             if (empty($game->supervision_id)) {

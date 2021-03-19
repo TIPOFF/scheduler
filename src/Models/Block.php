@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Models;
 
+use Assert\Assert;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasCreator;
 use Tipoff\Support\Traits\HasPackageFactory;
@@ -20,9 +21,9 @@ class Block extends BaseModel
         parent::boot();
 
         static::creating(function ($block) {
-            if (empty($block->escaperoom_slot_id)) {
-                throw new \Exception('A participant block must be for an availability slot.');
-            }
+            Assert::lazy()
+                ->that($block->escaperoom_slot_id)->notEmpty('A participant block must be for an availability slot.')
+                ->verifyNow();
             if (empty($block->participants)) {
                 $block->participants = 20; // This completely blocks the slot since there are no rooms with a 20 participant capacity
             }
