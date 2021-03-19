@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Session;
 use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
+use Tipoff\Support\Contracts\Booking\BookingSlotInterface;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
-class EscaperoomSlot extends BaseModel
+class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 {
     use HasPackageFactory;
     use HasUpdater;
@@ -61,7 +63,7 @@ class EscaperoomSlot extends BaseModel
      * @param string $finalTime
      * @return bool
      */
-    public function isActiveAtTimeRange($initialTime, $finalTime)
+    public function isActiveAtTimeRange($initialTime, $finalTime): bool
     {
         $initialTime = Carbon::parse($initialTime, 'UTC');
         $finalTime = Carbon::parse($finalTime, 'UTC');
@@ -126,7 +128,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function hasHold()
+    public function hasHold(): bool
     {
         return Cache::has($this->getHoldCacheKey());
     }
@@ -146,7 +148,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return self
      */
-    public function releaseHold()
+    public function releaseHold(): self
     {
         Cache::delete($this->getHoldCacheKey());
 
@@ -170,7 +172,7 @@ class EscaperoomSlot extends BaseModel
      * @param Carbon|null $expiresAt
      * @return self
      */
-    public function setHold($userId, $expiresAt = null)
+    public function setHold($userId, $expiresAt = null): self
     {
         if (empty($expiresAt)) {
             $expiresAt = now()->addSeconds(config('services.slot.hold.lifetime', 600));
@@ -263,7 +265,7 @@ class EscaperoomSlot extends BaseModel
         return $this->hasMany(app('block'));
     }
 
-    public function bookings()
+    public function bookings(): Relation
     {
         return $this->hasMany(app('booking'));
     }
@@ -355,7 +357,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function isBookable()
+    public function isBookable(): bool
     {
         if ($this->getCarbonStartAt() < Carbon::now('UTC')->add('20 minutes')) {
             return false;
@@ -373,7 +375,7 @@ class EscaperoomSlot extends BaseModel
      *
      * @return bool
      */
-    public function isVirtual()
+    public function isVirtual(): bool
     {
         return ! $this->exists;
     }
@@ -419,5 +421,47 @@ class EscaperoomSlot extends BaseModel
         }
 
         return $slot;
+    }
+
+    public function resolveSlot($slotNumber): self
+    {
+        // @todo: implement resolveSlot
+        return $this;
+    }
+
+    public function getTimezone(): string
+    {
+        // @todo: implement getTimezone
+        return "";
+    }
+
+    public function getTime(): Carbon
+    {
+        // @todo: implement getTime
+        return Carbon::now();
+    }
+
+    public function getLabel(): string
+    {
+        // @todo: implement getLabel
+        return "";
+    }
+
+    public function getDate(): Carbon
+    {
+        // @todo: implement getDate
+        return Carbon::now();     
+    }
+
+    public function getStartAt(): Carbon
+    {
+        // @todo: implement getStartAt
+        return Carbon::now();    
+    }
+
+    public function getEndAt(): Carbon
+    {
+        // @todo: implement getEndAt
+        return Carbon::now(); 
     }
 }
