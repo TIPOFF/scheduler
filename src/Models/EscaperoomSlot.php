@@ -24,7 +24,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
         'date' => 'datetime',
         'start_at' => 'datetime',
         'end_at' => 'datetime',
-        'room_available_at' => 'datetime',
+        'slot_available_at' => 'datetime',
     ];
 
     protected static function boot()
@@ -69,8 +69,8 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
         if (
             ($this->start_at >= $initialTime && $this->start_at <= $finalTime) ||
-            ($this->room_available_at >= $initialTime && $this->room_available_at <= $finalTime) ||
-            ($this->start_at <= $initialTime && $this->room_available_at >= $finalTime)
+            ($this->slot_available_at >= $initialTime && $this->slot_available_at <= $finalTime) ||
+            ($this->start_at <= $initialTime && $this->slot_available_at >= $finalTime)
         ) {
             return true;
         }
@@ -82,7 +82,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
     {
         $this->date = Carbon::parse($this->start_at)->setTimeZone($this->room->location->php_tz)->toDateString();
         $this->end_at = Carbon::parse($this->start_at)->addMinutes($this->room->theme->duration);
-        $this->room_available_at = Carbon::parse($this->start_at)->addMinutes($this->room->occupied_time);
+        $this->slot_available_at = Carbon::parse($this->start_at)->addMinutes($this->room->occupied_time);
 
         return $this;
     }
@@ -107,13 +107,13 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
     public function updateParticipants()
     {
-        if (empty($this->participants)) {
-            $this->participants = 0;
+        if (empty($this->participants_booked)) {
+            $this->participants_booked = 0;
         }
         if (empty($this->participants_blocked)) {
             $this->participants_blocked = 0;
         }
-        $available = $this->room->participants - ($this->participants + $this->participants_blocked);
+        $available = $this->room->participants_booked - ($this->participants_booked + $this->participants_blocked);
         if ($available < 0) {
             $available = 0;
         }
@@ -241,7 +241,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
     public function getLocationAvailableAttribute()
     {
-        return Carbon::parse($this->room_available_at)->setTimeZone($this->room->location->php_tz);
+        return Carbon::parse($this->slot_available_at)->setTimeZone($this->room->location->php_tz);
     }
 
     public function getFormattedStartAttribute()
