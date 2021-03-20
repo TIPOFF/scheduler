@@ -17,9 +17,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Tipoff\Support\Nova\BaseResource;
 
-class Game extends BaseResource
+class EscaperoomGame extends BaseResource
 {
-    public static $model = \Tipoff\Scheduler\Models\Game::class;
+    public static $model = \Tipoff\Scheduler\Models\EscaperoomGame::class;
 
     public static $title = 'id';
 
