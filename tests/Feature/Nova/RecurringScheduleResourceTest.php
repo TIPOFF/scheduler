@@ -6,6 +6,7 @@ namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
+use Tipoff\Scheduler\Models\RecurringSchedule;
 use Tipoff\Scheduler\Tests\TestCase;
 
 class RecurringScheduleResourceTest extends TestCase
@@ -20,7 +21,7 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function index_by_role(?string $role, bool $hasAccess, bool $canIndex)
     {
-        RecurringScheduler::factory()->count(4)->create();
+        RecurringSchedule::factory()->count(4)->create();
 
         $user = User::factory()->create();
         if ($role) {
@@ -55,7 +56,7 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function show_by_role(?string $role, bool $hasAccess, bool $canView)
     {
-        $model = RecurringScheduler::factory()->create();
+        $model = RecurringSchedule::factory()->create();
 
         $user = User::factory()->create();
         if ($role) {
@@ -90,7 +91,7 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function delete_by_role(?string $role, bool $hasAccess, bool $canDelete)
     {
-        $model = RecurringScheduler::factory()->create();
+        $model = RecurringSchedule::factory()->create();
 
         $user = User::factory()->create();
         if ($role) {
