@@ -6,8 +6,8 @@ namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
-use Tipoff\Scheduler\Models\ScheduleEraser;
 use Tipoff\Schedule\Tests\TestCase;
+use Tipoff\Scheduler\Models\ScheduleEraser;
 
 class ScheduleEraserResourceTest extends TestCase
 {
