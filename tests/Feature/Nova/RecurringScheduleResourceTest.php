@@ -6,7 +6,6 @@ namespace Tipoff\Schedulder\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
-use Tipoff\Scheduler\Models\RecurringSchedule;
 use Tipoff\Schedule\Tests\TestCase;
 
 class RecurringScheduleResourceTest extends TestCase
