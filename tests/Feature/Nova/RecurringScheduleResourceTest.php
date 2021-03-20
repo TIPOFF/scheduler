@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tipoff\Schedulder\Tests\Feature\Nova;
+namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
-use Tipoff\Schedule\Tests\TestCase;
+use Tipoff\Scheduler\Tests\TestCase;
 
 class RecurringScheduleResourceTest extends TestCase
 {
