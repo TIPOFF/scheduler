@@ -12,7 +12,7 @@ use Tipoff\Support\Models\BaseModel;
 use Tipoff\Support\Traits\HasPackageFactory;
 use Tipoff\Support\Traits\HasUpdater;
 
-class Game extends BaseModel
+class EscaperoomGame extends BaseModel
 {
     use HasPackageFactory;
     use HasUpdater;

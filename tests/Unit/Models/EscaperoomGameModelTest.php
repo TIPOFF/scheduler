@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Tipoff\Scheduler\Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tipoff\Scheduler\Models\Game;
+use Tipoff\Scheduler\Models\EscaperoomGame;
 use Tipoff\Scheduler\Tests\TestCase;
 
-class GameModelTest extends TestCase
+class EscaperoomGameModelTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @test */
     public function create()
     {
-        $model = Game::factory()->create();
+        $model = EscaperoomGame::factory()->create();
         $this->assertNotNull($model);
     }
 }
