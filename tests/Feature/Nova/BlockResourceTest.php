@@ -13,7 +13,7 @@ class BlockResourceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    private const NOVA_ROUTE = 'nova-api/scheduler';
+    private const NOVA_ROUTE = 'nova-api/blocks';
 
     /**
      * @dataProvider dataProviderForIndexByRole
