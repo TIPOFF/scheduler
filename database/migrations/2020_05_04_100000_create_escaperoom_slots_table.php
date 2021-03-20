@@ -20,8 +20,8 @@ class CreateEscaperoomSlotsTable extends Migration
             $table->date('date')->index();
             $table->dateTime('start_at');
             $table->dateTime('end_at'); // Computed from room->duration
-            $table->dateTime('room_available_at'); // Time when the room is available for another slot. Automatically computed by adding room->occupied_time to slot->start_at
-            $table->unsignedTinyInteger('participants');
+            $table->dateTime('slot_available_at'); // Time when the room is available for another slot. Automatically computed by adding room->occupied_time to slot->start_at
+            $table->unsignedTinyInteger('participants_booked');
             $table->unsignedTinyInteger('participants_blocked');
             $table->unsignedTinyInteger('participants_available'); // Capacity - defaults to room capacity for public games
             $table->foreignIdFor(app('supervision'));
