@@ -18,6 +18,7 @@ class BlockModelTest extends TestCase
     {
         $model = Block::factory()->create();
         $this->assertNotNull($model);
+
         return $model;
     }
 
