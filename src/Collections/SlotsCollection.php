@@ -46,7 +46,7 @@ class SlotsCollection extends Collection
 
                 return $slots
                     ->where('room_id', $slot->room_id)
-                    ->activeAtTimeRange($slot->start_at, $slot->slot_available_at)
+                    ->activeAtTimeRange($slot->start_at, $slot->room_available_at)
                     ->isEmpty();
             });
 
@@ -154,7 +154,7 @@ class SlotsCollection extends Collection
     public function filterActiveAt($value)
     {
         return $this->filter(function ($slot) use ($value) {
-            if ($slot->start_at < $value && $slot->slot_available_at > $value) {
+            if ($slot->start_at < $value && $slot->room_available_at > $value) {
                 return true;
             }
 
@@ -177,8 +177,8 @@ class SlotsCollection extends Collection
         return $this->filter(function ($slot) use ($initialTime, $finalTime) {
             if (
                 ($slot->start_at >= $initialTime && $slot->start_at <= $finalTime) ||
-                ($slot->slot_available_at >= $initialTime && $slot->slot_available_at <= $finalTime) ||
-                ($slot->start_at <= $initialTime && $slot->slot_available_at >= $finalTime)
+                ($slot->room_available_at >= $initialTime && $slot->room_available_at <= $finalTime) ||
+                ($slot->start_at <= $initialTime && $slot->room_available_at >= $finalTime)
             ) {
                 return true;
             }
