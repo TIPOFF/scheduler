@@ -107,13 +107,13 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
     public function updateParticipants()
     {
-        if (empty($this->participants)) {
-            $this->participants = 0;
+        if (empty($this->participants_booked)) {
+            $this->participants_booked = 0;
         }
         if (empty($this->participants_blocked)) {
             $this->participants_blocked = 0;
         }
-        $available = $this->room->participants - ($this->participants + $this->participants_blocked);
+        $available = $this->room->participants_booked - ($this->participants_booked + $this->participants_blocked);
         if ($available < 0) {
             $available = 0;
         }
