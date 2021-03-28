@@ -20,7 +20,7 @@
         "tipoff/authorization": "^2.7.1",
         "tipoff/bookings": "^2.2.1",
         "tipoff/escape-room": "^2.2.2",
-        "tipoff/locations": "^2.7.1",
+        "tipoff/locations": "^2.8.2",
         "tipoff/support": "^1.8.8"
     },
     "require-dev": {
