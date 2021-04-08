@@ -18,13 +18,13 @@
         "php": "^7.4|^8.0",
         "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^2.7.1",
-        "tipoff/bookings": "^2.2.1",
-        "tipoff/escape-room": "^2.2.2",
+        "tipoff/bookings": "^2.3.0",
+        "tipoff/escape-room": "^2.2.3",
         "tipoff/locations": "^2.8.2",
-        "tipoff/support": "^1.8.8"
+        "tipoff/support": "^1.8.9"
     },
     "require-dev": {
-        "tipoff/test-support": "^1.4.1"
+        "tipoff/test-support": "^1.4.2"
     },
     "autoload": {
         "psr-4": {
