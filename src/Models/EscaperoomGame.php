@@ -45,7 +45,7 @@ class EscaperoomGame extends BaseModel
 
             $game->game_number = $token;
             $game->initiated_at = $slot->start_at;
-            $game->participants = $game->slot->participants;
+            $game->participants = $game->slot->participants_booked;
         });
 
         static::saving(function ($game) {
