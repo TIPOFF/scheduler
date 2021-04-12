@@ -19,9 +19,9 @@
         "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^2.8.0",
         "tipoff/bookings": "^2.4.0",
-        "tipoff/escape-room": "^2.2.3",
-        "tipoff/locations": "^2.9.7",
-        "tipoff/support": "^2.0.1"
+        "tipoff/escape-room": "^2.3.0",
+        "tipoff/locations": "^2.9.8",
+        "tipoff/support": "^2.0.2"
     },
     "require-dev": {
         "tipoff/test-support": "^2.0.0"
