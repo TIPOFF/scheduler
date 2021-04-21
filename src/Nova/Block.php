@@ -45,7 +45,7 @@ class Block extends BaseResource
         ])) {
             return $query
                 ->select('blocks.*')
-                ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
+                ->leftJoin('escaperoom_slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
                 ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
         }
 
@@ -53,7 +53,7 @@ class Block extends BaseResource
             return $orderlocation
                 ->whereIn('room.location_id', $request->user()->locations->pluck('id'));
         })->select('blocks.*')
-            ->leftJoin('slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
+            ->leftJoin('escaperoom_slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
             ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
     }
 
