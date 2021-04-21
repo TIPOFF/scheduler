@@ -14,27 +14,27 @@ class EscaperoomSlotPolicy
 
     public function viewAny(UserInterface $user): bool
     {
-        return $user->hasPermissionTo('view slots') ? true : false;
+        return $user->hasPermissionTo('view escape room slots') ? true : false;
     }
 
     public function view(UserInterface $user, EscaperoomSlot $slot): bool
     {
-        return $user->hasPermissionTo('view slots') ? true : false;
+        return $user->hasPermissionTo('view escape room slots') ? true : false;
     }
 
     public function create(UserInterface $user): bool
     {
-        return $user->hasPermissionTo('create slots') ? true : false;
+        return $user->hasPermissionTo('create escape room slots') ? true : false;
     }
 
     public function update(UserInterface $user, EscaperoomSlot $slot): bool
     {
-        return $user->hasPermissionTo('update slots') ? true : false;
+        return $user->hasPermissionTo('update escape room slots') ? true : false;
     }
 
     public function delete(UserInterface $user, EscaperoomSlot $slot): bool
     {
-        return $user->hasPermissionTo('delete slots') ? true : false;
+        return $user->hasPermissionTo('delete escape room slots') ? true : false;
     }
 
     public function restore(UserInterface $user, EscaperoomSlot $slot): bool
