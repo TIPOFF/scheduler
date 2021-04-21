@@ -44,15 +44,15 @@ class EscaperoomSlot extends BaseResource
             'Reservationist',
         ])) {
             return $query
-                ->select('slots.*')
-                ->leftJoin('rooms as room', 'room.id', '=', 'slots.room_id');
+                ->select('escaperoom_slots.*')
+                ->leftJoin('rooms as room', 'room.id', '=', 'escaperoom_slots.room_id');
         }
 
         return $query->whereHas('room', function ($roomlocation) use ($request) {
             return $roomlocation
                 ->whereIn('location_id', $request->user()->locations->pluck('id'));
-        })->select('slots.*')
-            ->leftJoin('rooms as room', 'room.id', '=', 'slots.room_id');
+        })->select('escaperoom_slots.*')
+            ->leftJoin('rooms as room', 'room.id', '=', 'escaperoom_slots.room_id');
     }
 
     public static $group = 'Operations Scheduler';
