@@ -65,6 +65,7 @@ class EscaperoomSlot extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
+            Text::make('Slot Number')->sortable(),
             Text::make('Room', 'room.id', function () {
                 return $this->room->name;
             })->sortable(),
