@@ -89,7 +89,6 @@ class EscaperoomSlot extends BaseResource
             nova('rate') ? BelongsTo::make('Rate', 'rate', nova('rate'))->hideWhenCreating()->nullable() : null,
             nova('supervision') ? BelongsTo::make('Supervision', 'supervision', nova('supervision'))->hideWhenCreating()->nullable() : null,
             new Panel('Participant Details', $this->participantFields()),
-            nova('booking') ? HasMany::make('Bookings', 'bookings', nova('booking')) : null,
             nova('block') ? HasMany::make('Blocks', 'blocks', nova('block')) : null,
             nova('note') ? MorphMany::make('Notes', 'notes', nova('note')) : null,
             nova('game') ? HasOne::make('Game', 'game', nova('game'))->nullable()->exceptOnForms() : null,
