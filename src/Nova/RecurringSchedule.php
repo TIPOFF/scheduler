@@ -93,7 +93,7 @@ class RecurringSchedule extends BaseResource
                 7 => 'Sunday',
             ])->required(),
             TimeField::make('Time')->withTwelveHourTime()->required(),
-            nova('rate') ? BelongsTo::make('Rate', 'rate', nova('rate'))->hideWhenCreating()->nullable() : null,
+            nova('escaperoom_rate') ? BelongsTo::make('Escaperoom Rate', 'escaperoom_rate', nova('escaperoom_rate'))->hideWhenCreating()->nullable() : null,
 
             new Panel('Optional Date Fields', $this->dateFields()),
 
