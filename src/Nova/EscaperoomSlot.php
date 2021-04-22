@@ -87,7 +87,7 @@ class EscaperoomSlot extends BaseResource
                 return $this->formatted_start;
             })->exceptOnForms(),
             DateTime::make('Start At')->required(),
-            nova('rate') ? BelongsTo::make('Rate', 'rate', nova('rate'))->hideWhenCreating()->nullable() : null,
+            #nova('rate') ? BelongsTo::make('Rate', 'rate', nova('rate'))->hideWhenCreating()->nullable() : null,
             nova('supervision') ? BelongsTo::make('Supervision', 'supervision', nova('supervision'))->hideWhenCreating()->nullable() : null,
             new Panel('Participant Details', $this->participantFields()),
             nova('block') ? HasMany::make('Blocks', 'blocks', nova('block')) : null,
