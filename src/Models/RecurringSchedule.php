@@ -88,9 +88,9 @@ class RecurringSchedule extends BaseModel
         return $this->belongsTo(app('room'));
     }
 
-    public function rate()
+    public function escaperoom_rate()
     {
-        return $this->belongsTo(app('escaperoom_rate'));
+        return $this->belongsTo(app('escaperoom_rate'), 'escaperoom_rate_id');
     }
 
     /**

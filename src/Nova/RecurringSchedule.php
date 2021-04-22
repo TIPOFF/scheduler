@@ -62,6 +62,9 @@ class RecurringSchedule extends BaseResource
             Text::make('Room', 'rooms.id', function () {
                 return $this->room->name;
             })->sortable(),
+            Text::make('Escaperoom Rate', 'rate', function () {
+                return $this->escaperoom_rate->name;
+            })->sortable(),
             Select::make('Day')->options([
                 1 => 'Monday',
                 2 => 'Tuesday',
