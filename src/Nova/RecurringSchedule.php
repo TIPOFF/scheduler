@@ -65,17 +65,8 @@ class RecurringSchedule extends BaseResource
             Text::make('Escaperoom Rate', 'rate', function () {
                 return $this->escaperoom_rate->name;
             })->sortable(),
-            Select::make('Day')->options([
-                1 => 'Monday',
-                2 => 'Tuesday',
-                3 => 'Wednesday',
-                4 => 'Thursday',
-                5 => 'Friday',
-                6 => 'Saturday',
-                7 => 'Sunday',
-            ])->displayUsingLabels()->sortable(),
+            Select::make('Day')->options($this->days)->displayUsingLabels()->sortable(),
             TimeField::make('Time')->withTwelveHourTime()->sortable(),
-            
         ]);
     }
 
@@ -83,15 +74,10 @@ class RecurringSchedule extends BaseResource
     {
         return array_filter([
             nova('room') ? BelongsTo::make('Room', 'room', nova('room'))->required() : null,
-            Select::make('Day of the Week', 'day')->options([
-                1 => 'Monday',
-                2 => 'Tuesday',
-                3 => 'Wednesday',
-                4 => 'Thursday',
-                5 => 'Friday',
-                6 => 'Saturday',
-                7 => 'Sunday',
-            ])->required(),
+            Select::make('Day of the Week', 'day')->options($this->days)->required(),
+            Text::make('Day of the Week', 'day.week', function () {
+                return $this->days[$this->day];
+            })->sortable()->onlyOnDetail(),
             TimeField::make('Time')->withTwelveHourTime()->required(),
             nova('escaperoom_rate') ? BelongsTo::make('Escaperoom Rate', 'escaperoom_rate', nova('escaperoom_rate'))->hideWhenCreating()->nullable() : null,
 
