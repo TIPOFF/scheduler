@@ -72,9 +72,7 @@ class RecurringSchedule extends BaseResource
                 7 => 'Sunday',
             ])->displayUsingLabels()->sortable(),
             TimeField::make('Time')->withTwelveHourTime()->sortable(),
-            Text::make('Rate', 'rate.id', function () {
-                return $this->rate->name;
-            })->sortable(),
+            
         ]);
     }
 
