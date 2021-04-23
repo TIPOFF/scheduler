@@ -24,3 +24,7 @@ All notable changes to `scheduler` will be documented in this file.
 - register policies
 - add nova resources
 - register nova resources
+
+## 2.0.1 - 2021-04-16
+
+- update test case

@@ -40,6 +40,7 @@ class TestCase extends BaseTestCase
             EscapeRoomServiceProvider::class,
             BookingsServiceProvider::class,
             StatusesServiceProvider::class,
+            BookingsServiceProvider::class,
             SchedulerServiceProvider::class,
         ];
     }
