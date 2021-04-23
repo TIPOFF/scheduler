@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -11,18 +11,8 @@ use Carbon\Carbon;
 
 class EscaperoomGameFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = EscaperoomGame::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         $startingDate = $this->faker->dateTimeBetween('-10 days', 'now');
@@ -37,14 +27,13 @@ class EscaperoomGameFactory extends Factory
         }
 
         return [
-            'escaperoom_slot_id'               => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
+            'escaperoom_slot_id'    => EscaperoomSlot::factory()->create(['start_at' => $startingDate]),
             'time'                  => $time,
             'clues'                 => $clues,
             'date'                  => Carbon::now(),
             'room_id'               => randomOrCreate(app('room')),
             'supervision_id'        => randomOrCreate(app('supervision')),
             'monitor_id'            => randomOrCreate(app('user')),
-            'receptionist_id'       => randomOrCreate(app('user')),
             'receptionist_id'       => randomOrCreate(app('user')),
             'manager_id'            => randomOrCreate(app('user')),
         ];

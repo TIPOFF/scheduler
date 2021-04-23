@@ -6,7 +6,10 @@ namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
+use Tipoff\EscapeRoom\Models\Room;
+use Tipoff\Locations\Models\Location;
 use Tipoff\Scheduler\Models\Block;
+use Tipoff\Scheduler\Models\EscaperoomSlot;
 use Tipoff\Scheduler\Tests\TestCase;
 
 class BlockResourceTest extends TestCase
@@ -21,9 +24,17 @@ class BlockResourceTest extends TestCase
      */
     public function index_by_role(?string $role, bool $hasAccess, bool $canIndex)
     {
-        Block::factory()->count(4)->create();
+        $location = Location::factory()->create();
+        Block::factory()->count(4)->create([
+            'escaperoom_slot_id' => EscaperoomSlot::factory()->create([
+                'room_id' => Room::factory()->create([
+                    'location_id' => $location,
+                ]),
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -56,9 +67,17 @@ class BlockResourceTest extends TestCase
      */
     public function show_by_role(?string $role, bool $hasAccess, bool $canView)
     {
-        $model = Block::factory()->create();
+        $location = Location::factory()->create();
+        $model = Block::factory()->create([
+            'escaperoom_slot_id' => EscaperoomSlot::factory()->create([
+                'room_id' => Room::factory()->create([
+                    'location_id' => $location,
+                ]),
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -91,9 +110,17 @@ class BlockResourceTest extends TestCase
      */
     public function delete_by_role(?string $role, bool $hasAccess, bool $canDelete)
     {
-        $model = Block::factory()->create();
+        $location = Location::factory()->create();
+        $model = Block::factory()->create([
+            'escaperoom_slot_id' => EscaperoomSlot::factory()->create([
+                'room_id' => Room::factory()->create([
+                    'location_id' => $location,
+                ]),
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -104,16 +131,16 @@ class BlockResourceTest extends TestCase
             ->assertStatus($hasAccess ? 200 : 403);
 
         // But deletion will only occur if user has permissions
-        $this->assertDatabaseCount('discounts', $canDelete ? 0 : 1);
+        $this->assertDatabaseCount('blocks', $canDelete ? 0 : 1);
     }
 
     public function dataProviderForDeleteByRole()
     {
         return [
-            'Admin' => ['Admin', true, false],
-            'Owner' => ['Owner', true, false],
-            'Executive' => ['Executive', true, false],
-            'Staff' => ['Staff', true, false],
+            'Admin' => ['Admin', true, true],
+            'Owner' => ['Owner', true, true],
+            'Executive' => ['Executive', true, true],
+            'Staff' => ['Staff', true, true],
             'Former Staff' => ['Former Staff', false, false],
             'Customer' => ['Customer', false, false],
             'No Role' => [null, false, false],

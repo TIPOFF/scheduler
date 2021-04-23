@@ -19,7 +19,7 @@
         "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^2.8.0",
         "tipoff/bookings": "^2.4.0",
-        "tipoff/escape-room": "^2.3.0",
+        "tipoff/escape-room": "dev-pdbreen/bugfix/fix-namespace as 2.3.3",
         "tipoff/locations": "^2.9.9",
         "tipoff/support": "^2.0.2"
     },

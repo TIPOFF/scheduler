@@ -27,28 +27,18 @@ class RecurringSchedule extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\EscapeRoom\Filters\Room::class,
-        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Nova\Filters\Room::class,
+        \Tipoff\EscapeRoom\Nova\Filters\RoomLocation::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query;
         }
 
-        /** @psalm-suppress UndefinedMagicMethod */
-        return $request->withOrdering($request->withFilters(
-            $query->select('recurring_schedules.*')
-                ->join('rooms', 'rooms.id', '=', 'recurring_schedules.room_id')
-        ));
+        return $query->select('recurring_schedules.*')
+            ->join('rooms', 'rooms.id', '=', 'recurring_schedules.room_id');
     }
 
     public static $group = 'Operations Scheduler';
@@ -60,7 +50,7 @@ class RecurringSchedule extends BaseResource
         return array_filter([
             ID::make()->sortable(),
             Text::make('Room', 'rooms.id', function () {
-                return $this->room->name;
+                return $this->resource->room->name;
             })->sortable(),
             Select::make('Day')->options([
                 1 => 'Monday',
@@ -73,7 +63,7 @@ class RecurringSchedule extends BaseResource
             ])->displayUsingLabels()->sortable(),
             TimeField::make('Time')->withTwelveHourTime()->sortable(),
             Text::make('Rate', 'rate.id', function () {
-                return $this->rate->name;
+                return $this->resource->rate->name ?? null;
             })->sortable(),
         ]);
     }

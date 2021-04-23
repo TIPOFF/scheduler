@@ -6,6 +6,8 @@ namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
+use Tipoff\EscapeRoom\Models\Room;
+use Tipoff\Locations\Models\Location;
 use Tipoff\Scheduler\Models\RecurringSchedule;
 use Tipoff\Scheduler\Tests\TestCase;
 
@@ -21,9 +23,16 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function index_by_role(?string $role, bool $hasAccess, bool $canIndex)
     {
-        RecurringSchedule::factory()->count(4)->create();
+        $this->logToStderr();
+        $location = Location::factory()->create();
+        RecurringSchedule::factory()->count(4)->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -56,9 +65,15 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function show_by_role(?string $role, bool $hasAccess, bool $canView)
     {
-        $model = RecurringSchedule::factory()->create();
+        $location = Location::factory()->create();
+        $model = RecurringSchedule::factory()->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -91,9 +106,15 @@ class RecurringScheduleResourceTest extends TestCase
      */
     public function delete_by_role(?string $role, bool $hasAccess, bool $canDelete)
     {
-        $model = RecurringSchedule::factory()->create();
+        $location = Location::factory()->create();
+        $model = RecurringSchedule::factory()->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -104,16 +125,16 @@ class RecurringScheduleResourceTest extends TestCase
             ->assertStatus($hasAccess ? 200 : 403);
 
         // But deletion will only occur if user has permissions
-        $this->assertDatabaseCount('discounts', $canDelete ? 0 : 1);
+        $this->assertDatabaseCount('recurring_schedules', $canDelete ? 0 : 1);
     }
 
     public function dataProviderForDeleteByRole()
     {
         return [
-            'Admin' => ['Admin', true, false],
-            'Owner' => ['Owner', true, false],
-            'Executive' => ['Executive', true, false],
-            'Staff' => ['Staff', true, false],
+            'Admin' => ['Admin', true, true],
+            'Owner' => ['Owner', true, true],
+            'Executive' => ['Executive', true, true],
+            'Staff' => ['Staff', true, true],
             'Former Staff' => ['Former Staff', false, false],
             'Customer' => ['Customer', false, false],
             'No Role' => [null, false, false],

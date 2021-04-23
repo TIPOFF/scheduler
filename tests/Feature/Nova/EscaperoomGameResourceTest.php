@@ -6,6 +6,8 @@ namespace Tipoff\Scheduler\Tests\Feature\Nova;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tipoff\Authorization\Models\User;
+use Tipoff\EscapeRoom\Models\Room;
+use Tipoff\Locations\Models\Location;
 use Tipoff\Scheduler\Models\EscaperoomGame;
 use Tipoff\Scheduler\Tests\TestCase;
 
@@ -21,9 +23,15 @@ class EscaperoomGameResourceTest extends TestCase
      */
     public function index_by_role(?string $role, bool $hasAccess, bool $canIndex)
     {
-        EscaperoomGame::factory()->count(4)->create();
+        $location = Location::factory()->create();
+        EscaperoomGame::factory()->count(4)->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -56,9 +64,15 @@ class EscaperoomGameResourceTest extends TestCase
      */
     public function show_by_role(?string $role, bool $hasAccess, bool $canView)
     {
-        $model = EscaperoomGame::factory()->create();
+        $location = Location::factory()->create();
+        $model = EscaperoomGame::factory()->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -91,9 +105,15 @@ class EscaperoomGameResourceTest extends TestCase
      */
     public function delete_by_role(?string $role, bool $hasAccess, bool $canDelete)
     {
-        $model = Escaperoomgame::factory()->create();
+        $location = Location::factory()->create();
+        $model = Escaperoomgame::factory()->create([
+            'room_id' => Room::factory()->create([
+                'location_id' => $location,
+            ]),
+        ]);
 
         $user = User::factory()->create();
+        $user->locations()->attach($location);
         if ($role) {
             $user->assignRole($role);
         }
@@ -104,7 +124,7 @@ class EscaperoomGameResourceTest extends TestCase
             ->assertStatus($hasAccess ? 200 : 403);
 
         // But deletion will only occur if user has permissions
-        $this->assertDatabaseCount('discounts', $canDelete ? 0 : 1);
+        $this->assertDatabaseCount('escaperoom_games', $canDelete ? 0 : 1);
     }
 
     public function dataProviderForDeleteByRole()

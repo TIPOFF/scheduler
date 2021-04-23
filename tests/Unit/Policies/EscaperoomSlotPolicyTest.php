@@ -16,10 +16,10 @@ class EscaperoomSlotPolicyTest extends TestCase
     /** @test */
     public function view_any()
     {
-        $user = self::createPermissionedUser('view slots', true);
+        $user = self::createPermissionedUser('view escape room slots', true);
         $this->assertTrue($user->can('viewAny', EscaperoomSlot::class));
 
-        $user = self::createPermissionedUser('view slots', false);
+        $user = self::createPermissionedUser('view escape room slots', false);
         $this->assertFalse($user->can('viewAny', EscaperoomSlot::class));
     }
 
@@ -39,14 +39,14 @@ class EscaperoomSlotPolicyTest extends TestCase
     public function data_provider_for_all_permissions_as_creator()
     {
         return [
-            'view-true' => [ 'view', self::createPermissionedUser('view slots', true), true ],
-            'view-false' => [ 'view', self::createPermissionedUser('view slots', false), false ],
-            'create-true' => [ 'create', self::createPermissionedUser('create slots', true), true ],
-            'create-false' => [ 'create', self::createPermissionedUser('create slots', false), false ],
-            'update-true' => [ 'update', self::createPermissionedUser('update slots', true), true ],
-            'update-false' => [ 'update', self::createPermissionedUser('update slots', false), false ],
-            'delete-true' => [ 'delete', self::createPermissionedUser('delete slots', true), true ],
-            'delete-false' => [ 'delete', self::createPermissionedUser('delete slots', false), false ],
+            'view-true' => [ 'view', self::createPermissionedUser('view escape room slots', true), true ],
+            'view-false' => [ 'view', self::createPermissionedUser('view escape room slots', false), false ],
+            'create-true' => [ 'create', self::createPermissionedUser('create escape room slots', true), true ],
+            'create-false' => [ 'create', self::createPermissionedUser('create escape room slots', false), false ],
+            'update-true' => [ 'update', self::createPermissionedUser('update escape room slots', true), true ],
+            'update-false' => [ 'update', self::createPermissionedUser('update escape room slots', false), false ],
+            'delete-true' => [ 'delete', self::createPermissionedUser('delete escape room slots', true), true ],
+            'delete-false' => [ 'delete', self::createPermissionedUser('delete escape room slots', false), false ],
         ];
     }
 

@@ -11,6 +11,7 @@ use Livewire\LivewireServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use Tipoff\Addresses\AddressesServiceProvider;
 use Tipoff\Authorization\AuthorizationServiceProvider;
+use Tipoff\Bookings\BookingsServiceProvider;
 use Tipoff\EscapeRoom\EscapeRoomServiceProvider;
 use Tipoff\Locations\LocationsServiceProvider;
 use Tipoff\Scheduler\SchedulerServiceProvider;
@@ -37,6 +38,7 @@ class TestCase extends BaseTestCase
             BlogServiceProvider::class,
             LocationsServiceProvider::class,
             EscapeRoomServiceProvider::class,
+            BookingsServiceProvider::class,
             StatusesServiceProvider::class,
             SchedulerServiceProvider::class,
         ];

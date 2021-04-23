@@ -1,37 +1,28 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
 namespace Tipoff\Scheduler\Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tipoff\Scheduler\Models\RecurringSchedule;
 
 class RecurringScheduleFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = RecurringSchedule::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
             'room_id' => randomOrCreate(app('room')),
             'escaperoom_rate_id' => randomOrCreate(app('escaperoom_rate')),
 
-            'day'  => rand(1, 7),
-            'time' => rand(0, 24) . ':00:00',
+            'day'  => $this->faker->numberBetween(1,7),
+            'time' => $this->faker->numberBetween(0,23) . ':00:00',
 
-            'valid_from' => now(),
-            'expires_at' => now()->addMonths(6),
+            'valid_from' => Carbon::now(),
+            'expires_at' => Carbon::now()->addMonths(6),
             'creator_id' => randomOrCreate(app('user')),
             'updater_id' => randomOrCreate(app('user')),
         ];
