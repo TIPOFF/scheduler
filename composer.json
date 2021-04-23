@@ -18,7 +18,7 @@
         "php": "^7.4|^8.0",
         "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^2.8.5",
-        "tipoff/bookings": "^2.5.2",
+        "tipoff/bookings": "^2.5.3",
         "tipoff/escape-room": "dev-pdbreen/bugfix/fix-namespace as 2.3.3",
         "tipoff/locations": "^2.9.9",
         "tipoff/support": "^2.1.3"
