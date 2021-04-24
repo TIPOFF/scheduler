@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -87,7 +88,16 @@ class EscaperoomSlot extends BaseResource
                 return $this->formatted_start;
             })->exceptOnForms(),
             DateTime::make('Start At')->required(),
-            //TODO is missing the morph relation with schedule_id and schedule_type and the models
+            MorphTo::make('schedule')->types(array_filter([
+                nova('user'),
+                nova('contact'),
+                nova('customer'),
+                nova('order'),
+                nova('booking'),
+                nova('game'),
+                nova('block'),
+                nova('slot'),
+            ]))->nullable(),
             nova('supervision') ? BelongsTo::make('Supervision', 'supervision', nova('supervision'))->hideWhenCreating()->nullable() : null,
             new Panel('Participant Details', $this->participantFields()),
             nova('block') ? HasMany::make('Blocks', 'blocks', nova('block')) : null,
