@@ -38,6 +38,7 @@ class TestCase extends BaseTestCase
             BlogServiceProvider::class,
             LocationsServiceProvider::class,
             EscapeRoomServiceProvider::class,
+            BookingsServiceProvider::class,
             StatusesServiceProvider::class,
             BookingsServiceProvider::class,
             SchedulerServiceProvider::class,

@@ -9,19 +9,19 @@ class AddSchedulerPermissions extends BasePermissionsMigration
     public function up()
     {
         $permissions = [
-             'view blocks' => ['Owner', 'Staff'],
-             'create blocks' => ['Owner', 'Staff'],
-             'update blocks' => ['Owner', 'Staff'],
-             'delete blocks' => ['Owner', 'Staff'],
-             'view games' => ['Owner', 'Staff'],
-             'update games' => ['Owner', 'Staff'],
-             'view schedules' => ['Owner', 'Staff'],
-             'create schedules' => ['Owner', 'Staff'],
-             'update schedules' => ['Owner', 'Staff'],
-             'delete schedules' => ['Owner', 'Staff'],
-             'view escape room slots' => ['Owner', 'Staff'],
-             'create escape room slots' => ['Owner', 'Staff'],
-             'update escape room slots' => ['Owner', 'Staff'],
+             'view blocks' => ['Owner', 'Executive', 'Staff'],
+             'create blocks' => ['Owner', 'Executive', 'Staff'],
+             'update blocks' => ['Owner', 'Executive', 'Staff'],
+             'delete blocks' => ['Owner', 'Executive', 'Staff'],
+             'view games' => ['Owner', 'Executive', 'Staff'],
+             'update games' => ['Owner', 'Executive', 'Staff'],
+             'view schedules' => ['Owner', 'Executive', 'Staff'],
+             'create schedules' => ['Owner', 'Executive', 'Staff'],
+             'update schedules' => ['Owner', 'Executive', 'Staff'],
+             'delete schedules' => ['Owner', 'Executive', 'Staff'],
+             'view escape room slots' => ['Owner', 'Executive', 'Staff'],
+             'create escape room slots' => ['Owner', 'Executive', 'Staff'],
+             'update escape room slots' => ['Owner', 'Executive', 'Staff'],
              'delete escape room slots' => [],
         ];
         $this->createPermissions($permissions);

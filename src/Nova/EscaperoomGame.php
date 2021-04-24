@@ -29,20 +29,13 @@ class EscaperoomGame extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\EscapeRoom\Filters\Room::class,
-        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Nova\Filters\Room::class,
+        \Tipoff\EscapeRoom\Nova\Filters\RoomLocation::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query;
         }
 
@@ -69,7 +62,7 @@ class EscaperoomGame extends BaseResource
     {
         return array_filter([
             Text::make('Game Number')->exceptOnForms(),
-            BelongsTo::make('EscaperoomSlot')->hideWhenUpdating(),
+            BelongsTo::make('EscaperoomSlot', 'slot', EscaperoomSlot::class)->hideWhenUpdating(),
             nova('room') ? BelongsTo::make('Room', 'room', nova('room'))->exceptOnForms() : null,
             Date::make('Date')->exceptOnForms(),
             DateTime::make('Initiated At')->hideWhenCreating(),
@@ -83,7 +76,7 @@ class EscaperoomGame extends BaseResource
             nova('user') ? BelongsTo::make('Monitor', 'monitor', nova('user'))->nullable() : null,
             nova('user') ? BelongsTo::make('Receptionist', 'receptionist', nova('user'))->nullable() : null,
             nova('user') ? BelongsTo::make('Manager', 'manager', nova('user'))->nullable() : null,
-            MorphMany::make('Notes'),
+            nova('note') ? MorphMany::make('Notes', 'notes', nova('note')) : null,
 
             new Panel('Data Fields', $this->dataFields()),
         ]);
