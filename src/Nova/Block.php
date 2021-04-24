@@ -28,29 +28,22 @@ class Block extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\Scheduler\Filters\FutureBlocks::class,
-        \Tipoff\Scheduler\Filters\EscaperoomSlotRoomLocation::class,
-        \Tipoff\Scheduler\Filters\EscaperoomSlotRoom::class,
+        \Tipoff\Scheduler\Nova\Filters\FutureBlocks::class,
+        \Tipoff\Scheduler\Nova\Filters\SlotRoomLocation::class,
+        \Tipoff\Scheduler\Nova\Filters\SlotRoom::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query
                 ->select('blocks.*')
                 ->leftJoin('escaperoom_slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')
                 ->leftJoin('rooms as room', 'room.id', '=', 'slot.room_id');
         }
 
-        return $query->whereHas('room', function ($orderlocation) use ($request) {
-            return $orderlocation
+        return $query->whereHas('room', function ($room) use ($request) {
+            return $room
                 ->whereIn('room.location_id', $request->user()->locations->pluck('id'));
         })->select('blocks.*')
             ->leftJoin('escaperoom_slots as slot', 'slot.id', '=', 'blocks.escaperoom_slot_id')

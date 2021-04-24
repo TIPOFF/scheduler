@@ -29,21 +29,14 @@ class EscaperoomSlot extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\Scheduler\Filters\FutureEscaperoomSlots::class,
-        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
-        \Tipoff\EscapeRoom\Filters\Room::class,
+        \Tipoff\Scheduler\Nova\Filters\FutureSlots::class,
+        \Tipoff\EscapeRoom\Nova\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Nova\Filters\Room::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query
                 ->select('escaperoom_slots.*')
                 ->leftJoin('rooms as room', 'room.id', '=', 'escaperoom_slots.room_id');
@@ -68,10 +61,10 @@ class EscaperoomSlot extends BaseResource
             ID::make()->sortable(),
             Text::make('Slot Number')->sortable(),
             Text::make('Room', 'room.id', function () {
-                return $this->room->name;
+                return $this->resource->room->name;
             })->sortable(),
             Text::make('Start', 'start_at', function () {
-                return $this->formatted_start;
+                return $this->resource->formatted_start;
             })->sortable(),
             Date::make('Date', 'date')->sortable(),
             Number::make('Participants'),
@@ -85,7 +78,7 @@ class EscaperoomSlot extends BaseResource
             Text::make('Title')->exceptOnForms(),
             nova('room') ? BelongsTo::make('Room', 'room', nova('room'))->hideWhenUpdating()->required() : null,
             Text::make('Game Start', 'start_at', function () {
-                return $this->formatted_start;
+                return $this->resource->formatted_start;
             })->exceptOnForms(),
             DateTime::make('Start At')->required(),
             MorphTo::make('schedule')->types(array_filter([

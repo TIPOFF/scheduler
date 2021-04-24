@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -24,43 +24,25 @@ class EscaperoomSlotFactory extends Factory
      */
     public function definition()
     {
-        $startingDate = $this->faker->dateTimeBetween('now', '+5 days');
-        $room = randomOrCreate(app('room'));
-        // Allows half to default to the room rate and half to ovveride the rate
-        if ($this->faker->boolean) {
-            $rate = randomOrCreate(app('escaperoom_rate'));
-        } else {
-            $rate = null;
-        }
-
         $schedule = randomOrCreate(app('recurring_schedule'));
-        $dates = [];
-        $days = [];
-        if (empty($schedule->valid_from)) {
-            $schedule->valid_from = Carbon::today();
-        }
-        $initialDate = $schedule->valid_from;
-        for ($i = 1; $i < 60; $i++) {
-            $date = $initialDate->addDays(1);
-            if ($schedule->matchDate($date)) {
-                $dates[] = $date;
-            }
-        }
-        $startAt = $dates[array_rand($dates)]->toDateString() . ' ' . rand(10, 20) . ':00:00';
-        $type = 'recurring_schedules';
 
-        $startAt = Carbon::parse($startAt);
-        $endAt = $startAt->addMinutes(60);
+        $initialDate = $schedule->valid_from ?? Carbon::today();
+        $startAt = $initialDate->addDays($this->faker->numberBetween(1, 30));
+        while (!$schedule->matchDate($startAt)) {
+            $startAt = $startAt->addDay();
+        }
+
+        $startAt = $startAt->setTime($this->faker->numberBetween(10,20), 0, 0);
 
         return [
-            'room_id'            => $room,
+            'room_id'            => randomOrCreate(app('room')),
             'slot_number'        => $this->faker->randomNumber,
-            'schedule_type'      => $type,
+            'schedule_type'      => 'recurring_schedules',
             'schedule_id'        => $schedule->id,
-            'escaperoom_rate_id' => $rate,
+            'escaperoom_rate_id' => $this->faker->optional()->passthrough(randomOrCreate(app('escaperoom_rate'))),
             'supervision_id'     => randomOrCreate(app('supervision')),
             'start_at'           => $startAt,
-            'end_at'             => $endAt,
+            'end_at'             => $startAt->addMinutes(60),
         ];
     }
 }

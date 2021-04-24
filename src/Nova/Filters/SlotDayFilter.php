@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Filters\DateFilter;
 
-class EscaperoomSlotDayFilter extends DateFilter
+class SlotDayFilter extends DateFilter
 {
     /**
      * The displayable name of the filter.

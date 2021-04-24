@@ -25,20 +25,13 @@ class ScheduleEraser extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\EscapeRoom\Filters\Room::class,
-        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Nova\Filters\Room::class,
+        \Tipoff\EscapeRoom\Nova\Filters\RoomLocation::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query;
         }
 
@@ -55,7 +48,7 @@ class ScheduleEraser extends BaseResource
         return array_filter([
             ID::make()->sortable(),
             Text::make('Room', 'room.id', function () {
-                return $this->room->name;
+                return $this->resource->room->name;
             })->sortable(),
             DateTime::make('Start at')->sortable(),
             DateTime::make('End at')->sortable(),
