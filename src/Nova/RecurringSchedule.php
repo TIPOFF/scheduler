@@ -27,28 +27,18 @@ class RecurringSchedule extends BaseResource
 
     /** @psalm-suppress UndefinedClass */
     protected array $filterClassList = [
-        \Tipoff\EscapeRoom\Filters\Room::class,
-        \Tipoff\EscapeRoom\Filters\RoomLocation::class,
+        \Tipoff\EscapeRoom\Nova\Filters\Room::class,
+        \Tipoff\EscapeRoom\Nova\Filters\RoomLocation::class,
     ];
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->hasRole([
-            'Admin',
-            'Owner',
-            'Accountant',
-            'Executive',
-            'Reservation Manager',
-            'Reservationist',
-        ])) {
+        if ($request->user()->hasPermissionTo('all locations')) {
             return $query;
         }
 
-        /** @psalm-suppress UndefinedMagicMethod */
-        return $request->withOrdering($request->withFilters(
-            $query->select('recurring_schedules.*')
-                ->join('rooms', 'rooms.id', '=', 'recurring_schedules.room_id')
-        ));
+        return $query->select('recurring_schedules.*')
+            ->join('rooms', 'rooms.id', '=', 'recurring_schedules.room_id');
     }
 
     public static $group = 'Operations Scheduler';
