@@ -18,9 +18,9 @@
         "php": "^7.4|^8.0",
         "laraning/nova-time-field": "^1.2",
         "tipoff/authorization": "^2.8.6",
-        "tipoff/bookings": "^2.5.3",
+        "tipoff/bookings": "^2.5.4",
         "tipoff/escape-room": "^2.3.4",
-        "tipoff/locations": "^2.11.0",
+        "tipoff/locations": "^2.12",
         "tipoff/support": "^2.1.5"
     },
     "require-dev": {
