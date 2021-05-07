@@ -26,13 +26,13 @@ class FutureBlocks extends BooleanFilter
 
         if ($value['future'] == true) {
             return $query->whereHas('slot', function ($query) {
-                $query->where('slots.start_at', '>', Carbon::now());
+                $query->where('start_at', '>', Carbon::now());
             });
         }
 
         if ($value['past'] == true) {
             return $query->whereHas('slot', function ($query) {
-                $query->where('slots.start_at', '<', Carbon::now());
+                $query->where('start_at', '<', Carbon::now());
             });
         }
 
