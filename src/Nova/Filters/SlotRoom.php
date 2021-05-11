@@ -50,6 +50,6 @@ class SlotRoom extends Filter
         /** @var Model $models */
         $roomModel = app('room');
 
-        return $roomModel->pluck('id', 'name')->all();
+        return $roomModel->pluck('id', 'title')->all();
     }
 }

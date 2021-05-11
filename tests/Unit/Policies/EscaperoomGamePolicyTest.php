@@ -41,7 +41,7 @@ class EscaperoomGamePolicyTest extends TestCase
         return [
             'view-true' => [ 'view', self::createPermissionedUser('view games', true), true ],
             'view-false' => [ 'view', self::createPermissionedUser('view games', false), false ],
-            'create-true' => [ 'create', self::createPermissionedUser('create games', true), false ],
+            'create-true' => [ 'create', self::createPermissionedUser('create games', true), true ],
             'create-false' => [ 'create', self::createPermissionedUser('create games', false), false ],
             'update-true' => [ 'update', self::createPermissionedUser('update games', true), true ],
             'update-false' => [ 'update', self::createPermissionedUser('update games', false), false ],

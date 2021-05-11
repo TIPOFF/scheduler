@@ -21,10 +21,10 @@ class EscaperoomGame extends BaseResource
 {
     public static $model = \Tipoff\Scheduler\Models\EscaperoomGame::class;
 
-    public static $title = 'id';
+    public static $title = 'game_number';
 
     public static $search = [
-        'id',
+        'game_number',
     ];
 
     /** @psalm-suppress UndefinedClass */

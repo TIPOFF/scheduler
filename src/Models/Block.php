@@ -67,4 +67,9 @@ class Block extends BaseModel
     {
         return $this->morphMany(app('note'), 'noteable');
     }
+
+    public function bookingSlot()
+    {
+        return $this->belongsTo(app('booking_slot'));
+    }
 }

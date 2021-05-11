@@ -24,7 +24,7 @@ class EscaperoomGamePolicy
 
     public function create(UserInterface $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('create games') ? true : false;
     }
 
     public function update(UserInterface $user, EscaperoomGame $game): bool

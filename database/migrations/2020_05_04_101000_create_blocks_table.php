@@ -13,6 +13,7 @@ class CreateBlocksTable extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(app('escaperoom_slot'))->index();
+            $table->foreignIdFor(app('booking_slot'))->index();
             $table->unsignedTinyInteger('participants'); // Number of participants to be blocked in the availability slot
             $table->string('type')->nullable(); // Blocks are automatically applied for Private Games
             $table->foreignIdFor(app('user'), 'creator_id'); // Will be the customer's user ID if it is a private game
