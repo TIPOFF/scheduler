@@ -28,6 +28,16 @@ class RecurringSchedule extends BaseModel
         'expires_at' => 'date',
     ];
 
+    public $days = [
+        1 => 'Monday',
+        2 => 'Tuesday',
+        3 => 'Wednesday',
+        4 => 'Thursday',
+        5 => 'Friday',
+        6 => 'Saturday',
+        7 => 'Sunday',
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -88,9 +98,9 @@ class RecurringSchedule extends BaseModel
         return $this->belongsTo(app('room'));
     }
 
-    public function rate()
+    public function escaperoom_rate()
     {
-        return $this->belongsTo(app('escaperoom_rate'));
+        return $this->belongsTo(app('escaperoom_rate'), 'escaperoom_rate_id');
     }
 
     /**

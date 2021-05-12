@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -58,6 +59,7 @@ class EscaperoomSlot extends BaseResource
     {
         return array_filter([
             ID::make()->sortable(),
+            Text::make('Slot Number')->sortable(),
             Text::make('Room', 'room.id', function () {
                 return $this->resource->room->name;
             })->sortable(),
@@ -79,10 +81,18 @@ class EscaperoomSlot extends BaseResource
                 return $this->resource->formatted_start;
             })->exceptOnForms(),
             DateTime::make('Start At')->required(),
-            nova('rate') ? BelongsTo::make('Rate', 'rate', nova('rate'))->hideWhenCreating()->nullable() : null,
+            MorphTo::make('schedule')->types(array_filter([
+                nova('user'),
+                nova('contact'),
+                nova('customer'),
+                nova('order'),
+                nova('booking'),
+                nova('game'),
+                nova('block'),
+                nova('slot'),
+            ]))->nullable(),
             nova('supervision') ? BelongsTo::make('Supervision', 'supervision', nova('supervision'))->hideWhenCreating()->nullable() : null,
             new Panel('Participant Details', $this->participantFields()),
-            nova('booking') ? HasMany::make('Bookings', 'bookings', nova('booking')) : null,
             nova('block') ? HasMany::make('Blocks', 'blocks', nova('block')) : null,
             nova('note') ? MorphMany::make('Notes', 'notes', nova('note')) : null,
             nova('game') ? HasOne::make('Game', 'game', nova('game'))->nullable()->exceptOnForms() : null,
