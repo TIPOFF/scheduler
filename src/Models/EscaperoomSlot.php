@@ -261,7 +261,7 @@ class EscaperoomSlot extends BaseModel implements BookingSlotInterface
 
     public function rate()
     {
-        return $this->belongsTo(app('rate'));
+        return $this->belongsTo(app('escaperoom_rate'), 'escaperoom_rate_id');
     }
 
     public function game()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Tipoff\Scheduler\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -49,7 +49,7 @@ class EscaperoomSchedulingService
             $finalDate = $initialDate;
         }
 
-        $items = app('slot')->whereDate('date', '<=', $finalDate)
+        $items = app('escaperoom_slot')->whereDate('date', '<=', $finalDate)
             ->whereDate('date', '>=', $initialDate)
             ->whereHas('room', function ($query) use ($locationId) {
                 return $query->where('location_id', $locationId);
@@ -74,7 +74,7 @@ class EscaperoomSchedulingService
             $finalDate = $initialDate;
         }
 
-        $items = app('slot')
+        $items = app('escaperoom_slot')
             ->whereDate('date', '<=', $finalDate)
             ->whereDate('date', '>=', $initialDate)
             ->where('room_id', $roomId)
